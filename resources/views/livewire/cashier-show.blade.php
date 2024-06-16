@@ -37,7 +37,10 @@
 
 
     <!-- end step indicators -->
-    <span class="text-gray-400">{{ $messages[$currentStep] }}</span>
+    <span class="text-gray-400 block mb-3">{{ $messages[$currentStep] }}</span>
+
+    <span id="countdown" class="block text-gray-50 text-3xl"></span>
+
 
     {{-- step one --}}
     @if ($currentStep === 1)
@@ -118,7 +121,7 @@
             </button>
         </form>
     @elseif($currentStep === 2)
-        <div class="p-6 mb-4 space-y-4">
+        <div class="p-6 space-y-4">
             <div
                 class="p-4 my-3 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800 max-w-1/"
                 role="alert">
@@ -132,7 +135,8 @@
                     <h3 class="text-lg font-medium">Attention!</h3>
                 </div>
                 <div class="mt-2 text-sm">
-                    You have only <strong class="bold"><u class="underline">15 minutes</u></strong> to send direct debit to
+                    You have only <strong class="bold"><u class="underline">15 minutes</u></strong> to send direct debit
+                    to
                     the cashier. If you do not send the payment within 15 minutes, the order will be canceled.
                 </div>
             </div>
@@ -154,21 +158,23 @@
                 <h3 class="text-xl mb-5 font-bold text-white text-left">Cashier details</h3>
                 <div class="w-fit space-y-4 mx-auto">
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white"> Full
+                        <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                            Full
                             name</label>
                         <input type="text" id="full_name" value="{{ $cashier->full_name }}"
                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                               placeholder="Bonnie Green" required/>
+                               placeholder="Bonnie Green" disabled
+                        />
                     </div>
 
                     <div class="col-span-2 sm:col-span-1">
-                        <label for="card-number-input" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
+                        <label for="card-number-input"
+                               class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
                             Card number</label>
                         <input type="text" id="card-number-input" value="{{ $cashier->card_number }}"
                                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                                placeholder="xxxx-xxxx-xxxx-xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" disabled/>
                     </div>
-                    <span id="countdown"></span>
                 </div>
             </div>
             <div class="text-left mt-4">
@@ -184,37 +190,33 @@
 </div>
 
 @script
-    <script>
-        $wire.on('start-timer', () => {
-            let amountTime = {{ $timer ?? 900 }};
+<script>
+    $wire.on('start-timer', () => {
+        let amountTime = {{ $timer ?? 900 }};
+        let intervalId;
 
-            function calculateTime (){
-                const countdown = document.querySelector("#countdown");
+        const countdown = document.querySelector("#countdown");
 
-                let minutes = Math.floor(amountTime/60);
-                let seconds = amountTime%60;
+        function calculateTime() {
+            const minutes = Math.floor(amountTime / 60).toString().padStart(2, '0');
+            const seconds = (amountTime % 60).toString().padStart(2, '0');
 
-                if (seconds < 10){
-                    seconds = "0" + seconds;
-                }
+            countdown.textContent = `${minutes}:${seconds}`;
+            amountTime--;
 
-                if (minutes < 10){
-                    minutes = "0" + minutes;
-                }
-
-                countdown.textContent = `${minutes}:${seconds}`;
-                amountTime--;
-
-                if (amountTime < 0) {
-                    stopTimer();
-                    amountTime = 0;
-                }
-
-                function stopTimer(){
-                    clearInterval();
-                }
+            if (amountTime < 0) {
+                stopTimer();
+                amountTime = 0;
             }
-            setInterval(calculateTime,1000);
-        });
-    </script>
+        }
+
+        function stopTimer() {
+            clearInterval(intervalId);
+        }
+
+        if (amountTime > 0) {
+            intervalId = setInterval(calculateTime, 1000);
+        }
+    });
+</script>
 @endscript
