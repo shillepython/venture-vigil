@@ -16,7 +16,7 @@ class CashierShow extends Component
     public $fiatUsd = 100;
     public $fiatRub;
     public $order;
-    public $timmer;
+    public $timer;
     public $defaultTimeOrder = 900;
 
     public $messages = [
@@ -35,7 +35,7 @@ class CashierShow extends Component
             $this->currentStep = 2;
             $this->order = $order;
 
-            $this->timmer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
+            $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
 
             return;
         }
@@ -52,7 +52,7 @@ class CashierShow extends Component
         ]);
         $this->currentStep = 2;
 
-        $this->timmer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
+        $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
     }
 
     public function updatedFiatUsd()
