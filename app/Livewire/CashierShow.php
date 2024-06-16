@@ -17,7 +17,7 @@ class CashierShow extends Component
     public $order;
 
     public $messages = [
-        1 => 'Buy Russian Rubles for United States Dollars',
+        1 => 'Buy United States Dollars for Russian Rubles',
         2 => 'Transfer Rubles to the cashier',
         3 => 'Wait for the cashier to confirm the transfer',
     ];
