@@ -30,6 +30,7 @@ class CashierShow extends Component
 
         if (isset($order)) {
             $this->currentStep = 2;
+            $this->order = $order;
             return;
         }
         $this->currentStep = 1;
