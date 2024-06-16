@@ -20,9 +20,9 @@ class CashierShow extends Component
     public $defaultTimeOrder = 900;
 
     public $messages = [
-        1 => 'Buy United States Dollars for Russian Rubles',
-        2 => 'Transfer Rubles to the cashier',
-        3 => 'Wait for the cashier to confirm the transfer',
+        1 => 'all.buy_usd_to_rub',
+        2 => 'all.transfer_rub_to_cashier',
+        3 => 'all.wait_submit_transfer',
     ];
 
 

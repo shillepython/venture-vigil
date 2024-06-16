@@ -37,7 +37,7 @@
 
 
     <!-- end step indicators -->
-    <span class="text-gray-400 block mb-3">{{ $messages[$currentStep] }}</span>
+    <span class="text-gray-400 block mb-3">{{ __($messages[$currentStep]) }}</span>
 
     <span id="countdown" class="block text-gray-50 text-3xl"></span>
 
@@ -50,7 +50,7 @@
                     <div class="flex flex-row space-x-3">
                         <div>
                             <label for="sell-currency"
-                                   class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Currency</label>
+                                   class="block mb-2 text-md font-medium text-gray-900 dark:text-white">{{ __('all.currency') }}</label>
                             <select wire:model="currency" id="sell-currency" name="sell-currency"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                     required disabled>
@@ -61,10 +61,9 @@
                         </div>
                         <div class="block grow">
                             <label for="sell-amount"
-                                   class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Amount
+                                   class="block mb-2 text-md font-medium text-gray-900 dark:text-white">{{ __('all.amount') }}
                                 $ <strong
-                                    class="ml-1 bg-red-100 text-red-800 text-sm font-medium me-2 px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300">min
-                                    100 USD</strong></label>
+                                    class="ml-1 bg-red-100 text-red-800 text-sm font-medium me-2 px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ __('all.min_amount', ['amount' => 100]) }}</strong></label>
                             <input wire:model.live.debounce.1000ms="fiatUsd" type="number" min="100" max="10000"
                                    id="sell-amount"
                                    name="sell-amount"
@@ -91,7 +90,7 @@
 
                 <div class="flex flex-row space-x-3">
                     <div>
-                        <label for="buy-currency" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Currency</label>
+                        <label for="buy-currency" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">{{ __('all.currency') }}</label>
                         <select wire:model="currency" id="buy-currency" name="buy-currency"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required disabled>
@@ -101,7 +100,7 @@
                         </select>
                     </div>
                     <div class="block grow">
-                        <label for="buy-amount" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">Amount
+                        <label for="buy-amount" class="block mb-2 text-md font-medium text-gray-900 dark:text-white">{{ __('all.amount') }}
                             ₽</label>
                         <input wire:model.live.debounce.1000ms="fiatRub" type="number" min="100" max="1000000"
                                id="buy-amount" name="buy-amount"
@@ -111,13 +110,13 @@
 
                 </div>
                 <span
-                    class="block mt-4 text-sm text-gray-500 dark:text-gray-300">*Price per dollar is {{ $cashier->price_per_dollar }} RUB</span>
+                    class="block mt-4 text-sm text-gray-500 dark:text-gray-300">{{ __('all.price_per_dollar', ['price' => $cashier->price_per_dollar]) }}</span>
                 <span
-                    class="block text-sm text-gray-500 dark:text-gray-300">*Minimal amount to purchase is 100 USD</span>
+                    class="block text-sm text-gray-500 dark:text-gray-300">{{ __('all.min_amount_warning', ['amount' => 100]) }}</span>
             </div>
             <button type="submit" {{ $enableSumbitStageOne ? '' : 'disabled' }}
-            class="text-white {{ $enableSumbitStageOne ? 'dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full sm:w-auto text-center transition duration-150 ease-in-out">
-                Next
+            class="text-white {{ $enableSumbitStageOne ? 'dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 w-full sm:w-auto text-center transition duration-150 ease-in-out">
+                {{ __('all.next') }}
             </button>
         </form>
     @elseif($currentStep === 2)
@@ -125,25 +124,23 @@
             <div
                 class="p-4 my-3 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800 max-w-1/"
                 role="alert">
-                <div class="flex items-center">
+                <div class="flex items-center justify-center">
                     <svg class="flex-shrink-0 w-4 h-4 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                          fill="currentColor" viewBox="0 0 20 20">
                         <path
                             d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
                     </svg>
                     <span class="sr-only">Info</span>
-                    <h3 class="text-lg font-medium">Attention!</h3>
+                    <h3 class="text-lg font-medium">{{ __('all.attention') }}!</h3>
                 </div>
                 <div class="mt-2 text-sm">
-                    You have only <strong class="bold"><u class="underline">15 minutes</u></strong> to send direct debit
-                    to
-                    the cashier. If you do not send the payment within 15 minutes, the order will be canceled.
+                    {{ __('all.you_have_only') }} <strong class="bold"><u class="underline">{{ __('all.15_minutes') }}</u></strong> {{ __('all.to_send_debit_the_cashier') }}
                 </div>
             </div>
-            <h3 class="dark:text-white text-md">Order: {{ $order->id }}</h3>
-            <h3 class="dark:text-white text-md">Order date: {{ $order->created_at }}</h3>
+            <h3 class="dark:text-white text-md">{{ __('all.order') }}: {{ $order->id }}</h3>
+            <h3 class="dark:text-white text-md">{{ __('all.order_date') }}: {{ $order->created_at }}</h3>
             <div class="flex flex-col items-center">
-                <p class="text-white-text-md text-gray-400">Use the details below</p>
+                <p class="text-white-text-md text-gray-400">{{ __('all.details_below') }}</p>
 
 
                 <svg class="w-6 h-6 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
@@ -155,14 +152,14 @@
 
             <div
                 class="w-full rounded-lg border border-gray-200 bg-white px-4 py-6 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:px-6 lg:max-w-xl lg:px-8">
-                <h3 class="text-xl mb-5 font-bold text-white text-left">Cashier details</h3>
-                <div class="w-fit space-y-4 mx-auto">
+                <h3 class="text-xl mb-5 font-bold text-white text-center">{{ __('all.cashier_details') }}</h3>
+                <div class="w-full space-y-4 mx-auto">
                     <div class="col-span-2 sm:col-span-1">
                         <label for="full_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                            Full
-                            name</label>
+                            {{ __('all.full_name') }}
+                        </label>
                         <input type="text" id="full_name" value="{{ $cashier->full_name }}"
-                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-md text-center text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                                placeholder="Bonnie Green" disabled
                         />
                     </div>
@@ -170,17 +167,17 @@
                     <div class="col-span-2 sm:col-span-1">
                         <label for="card-number-input"
                                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">
-                            Card number</label>
+                            {{ __('all.card_number') }}</label>
                         <input type="text" id="card-number-input" value="{{ $cashier->card_number }}"
-                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                               class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-md text-center text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                                placeholder="xxxx-xxxx-xxxx-xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" disabled/>
                     </div>
                 </div>
             </div>
             <div class="text-left mt-4">
                 <button type="submit" {{ $enableSumbitStageOne ? '' : 'disabled' }}
-                class=" text-white {{ $enableSumbitStageOne ? 'dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 w-full sm:w-auto text-center transition duration-150 ease-in-out">
-                    Next
+                class="text-white {{ $enableSumbitStageOne ? 'dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 w-full text-center transition duration-150 ease-in-out">
+                    {{ __('all.submit') }}
                 </button>
             </div>
         </div>
