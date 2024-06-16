@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Orders;
 use Livewire\Component;
 
 class CashierShow extends Component
@@ -9,21 +10,33 @@ class CashierShow extends Component
     public $id;
     public $cashier;
     public $minFiatUsdMessage;
-    public $stage;
+    public $currentStep;
     public $enableSumbitStageOne = true;
     public $fiatUsd = 100;
     public $fiatRub;
+    public $order;
 
     public function mount()
     {
-        $this->stage = 1;
+        $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
         $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
+
+        if (isset($order)) {
+            $this->currentStep = 2;
+            return;
+        }
+        $this->currentStep = 1;
         $this->fiatRub = round(floatval($this->cashier->price_per_dollar) * intval($this->fiatUsd), 2);
     }
 
     public function createOrder()
     {
-
+        $this->order = Orders::create([
+            'user_id'=> auth()->user()->id,
+            'cashier_id' => $this->cashier->id,
+            'amount' => $this->fiatRub,
+        ]);
+        $this->currentStep = 2;
     }
 
     public function updatedFiatUsd()
