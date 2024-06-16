@@ -30,7 +30,6 @@ class CashierShow extends Component
     {
         $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
         $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
-        $this->currentTime = time();
         if (isset($order)) {
             $this->currentStep = 2;
             $this->order = $order;
