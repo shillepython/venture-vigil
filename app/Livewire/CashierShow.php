@@ -16,6 +16,13 @@ class CashierShow extends Component
     public $fiatRub;
     public $order;
 
+    public $messages = [
+        1 => 'Buy Russian Rubles for United States Dollars',
+        2 => 'Transfer Rubles to the cashier',
+        3 => 'Wait for the cashier to confirm the transfer',
+    ];
+
+
     public function mount()
     {
         $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
