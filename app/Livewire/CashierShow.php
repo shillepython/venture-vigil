@@ -7,10 +7,11 @@ use Livewire\Component;
 class CashierShow extends Component
 {
     public $id;
+    public $cashier;
 
     public function mount()
     {
-        $cashier = \App\Models\Cashier::find($this->id) ?? '';
+        $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
     }
     public function render()
     {
