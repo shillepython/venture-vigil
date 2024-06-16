@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,4 +19,7 @@ Route::middleware([
 
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier');
     Route::get('/cashier/{id}', [CashierController::class, 'show'])->name('cashier.show');
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.list');
+
 });

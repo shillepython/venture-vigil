@@ -55,6 +55,12 @@ class CashierShow extends Component
         $this->dispatch('start-timer');
     }
 
+    #[On('stop-timer')]
+    public function stopTimer()
+    {
+        dd('123');
+    }
+
     public function updatedFiatUsd()
     {
         $this->minFiatUsdMessage = '';
