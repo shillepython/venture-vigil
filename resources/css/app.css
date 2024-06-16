@@ -20,14 +20,14 @@
 
 /*order form*/
 
-#orderForm .form-header .stepIndicator.active {
+.form-header .stepIndicator.active {
     font-weight: 600;
 }
-#orderForm .form-header .stepIndicator.finish {
+.form-header .stepIndicator.finish {
     font-weight: 600;
     color: #5a67d8;
 }
-#orderForm .form-header .stepIndicator::before {
+.form-header .stepIndicator::before {
     content: "";
     position: absolute;
     left: 50%;
@@ -40,15 +40,15 @@
     border-radius: 50%;
     border: 3px solid #ebf4ff;
 }
-#orderForm .form-header .stepIndicator.active::before {
+.form-header .stepIndicator.active::before {
     background-color: #a3bffa;
     border: 3px solid #c3dafe;
 }
-#orderForm .form-header .stepIndicator.finish::before {
+.form-header .stepIndicator.finish::before {
     background-color: #5a67d8;
     border: 3px solid #c3dafe;
 }
-#orderForm .form-header .stepIndicator::after {
+.form-header .stepIndicator::after {
     content: "";
     position: absolute;
     left: 50%;
@@ -57,18 +57,18 @@
     height: 3px;
     background-color: #f3f3f3;
 }
-#orderForm .form-header .stepIndicator.active::after {
+.form-header .stepIndicator.active::after {
     background-color: #a3bffa;
 }
-#orderForm .form-header .stepIndicator.finish::after {
+.form-header .stepIndicator.finish::after {
     background-color: #5a67d8;
 }
-#orderForm .form-header .stepIndicator:last-child:after {
+.form-header .stepIndicator:last-child:after {
     display: none;
 }
-#orderForm input.invalid {
+input.invalid {
     border: 2px solid #ffaba5;
 }
-#orderForm .step {
+.step {
     display: none;
 }
