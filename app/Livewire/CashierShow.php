@@ -14,6 +14,13 @@ class CashierShow extends Component
     public $fiatUsd = 100;
     public $fiatRub;
 
+    public $messages = [
+        1 => 'Buy Russian Rubles for United States Dollars',
+        2 => 'Transfer Rubles to the cashier',
+        3 => 'Wait for the cashier to confirm the transfer',
+    ];
+
+
     public function mount()
     {
         $this->stage = 1;
