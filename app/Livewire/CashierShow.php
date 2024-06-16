@@ -20,7 +20,7 @@ class CashierShow extends Component
 
     }
 
-    public function setUsd($fiat)
+    public function setUsd($fiat): void
     {
         $this->fiatUsd = $fiat;
     }
