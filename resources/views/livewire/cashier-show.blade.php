@@ -118,9 +118,9 @@
             </button>
         </form>
     @elseif($currentStep === 2)
-        stage2
+        <h1>Count: <span wire:stream="countTimmer">{{ $timmer }}</span></h1>
+       <button wire:click="updtisd()">dasdasd</button>
     @elseif($currentStep === 3)
         finish
     @endif
-
 </div>

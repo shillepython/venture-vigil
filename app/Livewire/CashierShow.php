@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Orders;
 use Livewire\Component;
+use Livewire\Attributes\On;
 
 class CashierShow extends Component
 {
@@ -15,6 +16,8 @@ class CashierShow extends Component
     public $fiatUsd = 100;
     public $fiatRub;
     public $order;
+    public $timmer;
+    public $defaultTimeOrder = 900;
 
     public $messages = [
         1 => 'Buy United States Dollars for Russian Rubles',
@@ -27,10 +30,13 @@ class CashierShow extends Component
     {
         $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
         $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
-
+        $this->currentTime = time();
         if (isset($order)) {
             $this->currentStep = 2;
             $this->order = $order;
+
+            $this->timmer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
+
             return;
         }
         $this->currentStep = 1;
@@ -45,6 +51,8 @@ class CashierShow extends Component
             'amount' => $this->fiatRub,
         ]);
         $this->currentStep = 2;
+
+        $this->timmer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
     }
 
     public function updatedFiatUsd()
