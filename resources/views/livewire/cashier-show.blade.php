@@ -28,7 +28,7 @@
 
 
     <!-- end step indicators -->
-    <span class="text-gray-400">{{ $messages[$stage] }}</span>
+    <span class="text-gray-400">{{ $messages[$currentStep] }}</span>
 
     {{-- step one --}}
     @if ($currentStep === 1)
