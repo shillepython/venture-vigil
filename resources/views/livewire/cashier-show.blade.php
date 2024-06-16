@@ -10,7 +10,7 @@
     <!-- end step indicators -->
 
     {{-- step one --}}
-    @if ($stageOne)
+    @if ($stage === 1)
     <form id="orderForm" class="text-left mx-auto p-6 mb-4" wire:submit="createOrder">
         <div class="mb-6 space-y-4">
             <div class="">
@@ -81,9 +81,9 @@
             Next
         </button>
     </form>
-    @elseif($stageTwo)
+    @elseif($stage === 2)
         stage2
-    @elseif($stageThree)
+    @elseif($stage === 3)
         finish
     @endif
 

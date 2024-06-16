@@ -9,16 +9,14 @@ class CashierShow extends Component
     public $id;
     public $cashier;
     public $minFiatUsdMessage;
-    public $stageOne = false;
-    public $stageTwo = false;
-    public $stageThree = false;
+    public $stage;
     public $enableSumbitStageOne = true;
     public $fiatUsd = 100;
     public $fiatRub;
 
     public function mount()
     {
-        $this->stageOne = true;
+        $this->stage = 1;
         $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
         $this->fiatRub = round(floatval($this->cashier->price_per_dollar) * intval($this->fiatUsd), 2);
     }
