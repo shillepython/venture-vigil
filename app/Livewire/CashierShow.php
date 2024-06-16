@@ -35,7 +35,7 @@ class CashierShow extends Component
             $this->order = $order;
 
             $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
-
+            $this->dispatch('start-timer');
             return;
         }
         $this->currentStep = 1;
@@ -52,6 +52,7 @@ class CashierShow extends Component
         $this->currentStep = 2;
 
         $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
+        $this->dispatch('start-timer');
     }
 
     public function updatedFiatUsd()

@@ -183,34 +183,38 @@
     @endif
 </div>
 
-<script>
-    let amountTime = {{ $timer }};
+@script
+    <script>
+        $wire.on('start-timer', () => {
+            let amountTime = {{ $timer ?? 900 }};
 
-    function calculateTime (){
-        const countdown = document.querySelector("#countdown");
+            function calculateTime (){
+                const countdown = document.querySelector("#countdown");
 
-        let minutes = Math.floor(amountTime/60);
-        let seconds = amountTime%60;
+                let minutes = Math.floor(amountTime/60);
+                let seconds = amountTime%60;
 
-        if (seconds < 10){
-            seconds = "0" + seconds;
-        }
+                if (seconds < 10){
+                    seconds = "0" + seconds;
+                }
 
-        if (minutes < 10){
-            minutes = "0" + minutes;
-        }
+                if (minutes < 10){
+                    minutes = "0" + minutes;
+                }
 
-        countdown.textContent = `${minutes}:${seconds}`;
-        amountTime--;
+                countdown.textContent = `${minutes}:${seconds}`;
+                amountTime--;
 
-        if (amountTime < 0) {
-            stopTimer();
-            amountTime = 0;
-        }
+                if (amountTime < 0) {
+                    stopTimer();
+                    amountTime = 0;
+                }
 
-        function stopTimer(){
-            clearInterval();
-        }
-    }
-    setInterval(calculateTime,1000);
-</script>
+                function stopTimer(){
+                    clearInterval();
+                }
+            }
+            setInterval(calculateTime,1000);
+        });
+    </script>
+@endscript
