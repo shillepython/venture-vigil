@@ -72,6 +72,11 @@ class CashierShow extends Component
         $this->dispatch('delete-timer');
     }
 
+    public function resetForm()
+    {
+        $this->reset();
+    }
+
     #[On('stop-timer')]
     public function stopTimer()
     {
