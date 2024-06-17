@@ -25,7 +25,6 @@ class CashierShow extends Component
         3 => 'all.wait_submit_transfer',
     ];
 
-
     public function mount()
     {
         $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
@@ -61,6 +60,11 @@ class CashierShow extends Component
 
         $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
         $this->dispatch('start-timer');
+    }
+
+    public function submitPayment()
+    {
+        $this->currentStep = 3;
     }
 
     #[On('stop-timer')]
