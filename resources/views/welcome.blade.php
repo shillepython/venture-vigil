@@ -188,7 +188,7 @@
             <div class="flex flex-wrap items-center mt-32">
                 <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
                     <div
-                        class="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-gray-100"
+                        class="text-gray-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 sm:h-18 mb-6 shadow-lg rounded-full bg-gray-100"
                     >
                         <i class="fas fa-university text-xl"></i>
                     </div>
@@ -205,11 +205,6 @@
                     >
                         The security of our clients is paramount, for this we have the functionality to protect your assets.
                     </p>
-                    <a
-                        href="{{ route('register') }}"
-                        class="font-bold text-white mt-8 bg-blue-600 px-6 py-3 rounded shadow"
-                    >Register now!</a
-                    >
                 </div>
                 <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
                     <div
@@ -277,7 +272,7 @@
                 <div class="w-full md:w-5/12 ml-auto mr-auto px-4">
                     <div class="md:pr-12">
                         <div
-                            class="text-pink-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-pink-300"
+                            class="text-pink-600 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-pink-300 mt-5"
                         >
                             <i class="fas fa-rocket text-xl"></i>
                         </div>
@@ -335,38 +330,16 @@
     </section>
 
     <section class="pb-20 relative block bg-gray-900">
-        <div
-            class="bottom-auto top-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden -mt-20"
-            style="height: 80px;"
-        >
-            <svg
-                class="absolute bottom-0 overflow-hidden"
-                xmlns="http://www.w3.org/2000/svg"
-                preserveAspectRatio="none"
-                version="1.1"
-                viewBox="0 0 2560 100"
-                x="0"
-                y="0"
-            >
-                <polygon
-                    class="text-gray-900 fill-current"
-                    points="2560 0 2560 100 0 100"
-                ></polygon>
-            </svg>
-        </div>
+
         <div class="container mx-auto px-4 lg:pt-12">
             <div class="flex flex-wrap text-center justify-center">
                 <div class="w-full lg:w-6/12 px-4">
-                    <h2 class="text-4xl font-semibold text-white">Build something</h2>
-                    <p class="text-lg leading-relaxed mt-4 mb-4 text-gray-500">
-                        Put the potentially record low maximum sea ice extent tihs year
-                        down to low ice. According to the National Oceanic and
-                        Atmospheric Administration, Ted, Scambos.
-                    </p>
+                    <h2 class="text-2xl font-semibold leading-relaxed mb-8  text-white mt-10">Start your story here, buy trade and earn on the venture vigil trading platform.</h2>
+
                     <a
                         href="{{ route('register') }}"
                         class="font-bold text-white mt-8 bg-blue-600 px-6 py-3 rounded shadow"
-                    >Register now!</a>
+                    >Register</a>
                 </div>
             </div>
         </div>
