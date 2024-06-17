@@ -74,7 +74,7 @@ class CashierShow extends Component
 
     public function resetForm()
     {
-        $this->reset();
+        return redirect(request()->header('Referer'));
     }
 
     #[On('stop-timer')]
