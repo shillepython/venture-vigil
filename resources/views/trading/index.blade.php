@@ -17,11 +17,10 @@
                     "allow_symbol_change": true,
                     "details": true,
                     "calendar": false,
-                    "support_host": "https://www.tradingview.com"
+                    "support_host": "https://localhost"
                 }
             </script>
         </div>
         <!-- TradingView Widget END -->
     </div>
-
 </x-app-layout>
