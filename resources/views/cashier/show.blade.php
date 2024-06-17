@@ -5,9 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <livewire:cashier-show :id="$id" />
-        </div>
+    <div class="flex flex-col justify-center">
+        <livewire:cashier-show :id="$id"/>
     </div>
 </x-app-layout>
