@@ -31,4 +31,11 @@ return [
     'order_date' => 'Order date',
     'full_name' => 'Full name',
     'card_number' => 'Card number',
+    'amount_to_sell' => 'Amount to sell',
+    'amount_to_receive' => 'Amount to receive',
+    'thank_you' => 'Thank you',
+    'order_placed' => 'Your order has been placed',
+    'order_placed_desc' => 'Your order has been placed and is awaiting confirmation from the cashier. You can view the status of your order in the "Orders" section.',
+    'order_summary' => 'Order summary',
+    'another_order' => 'Place another order',
 ];

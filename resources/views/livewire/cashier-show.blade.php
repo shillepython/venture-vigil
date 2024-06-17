@@ -1,7 +1,7 @@
-<div class="bg-white  dark:bg-gray-800 rounded-lg shadow-xl px-3 mx-3 md:mx-auto md:px-8 py-6 md:max-w-lg text-center">
+<div
+    class="bg-white border-2 dark:bg-gray-800 rounded-lg shadow-xl px-3 mx-3 md:mx-auto md:px-8 py-6 md:max-w-lg text-center border-condition {{ $currentStep === 3 ? 'current-step-3' : '' }}">
     <h1 class="text-2xl font-bold text-white">RUB to USD</h1>
     <!-- start step indicators -->
-
     <ol class="flex py-6">
         <li class="flex w-full items-center text-blue-600 dark:text-blue-500 after:content-[''] after:w-full after:h-1 after:border-b after:border-blue-100 after:border-4 after:inline-block dark:after:border-blue-800">
         <span
@@ -13,9 +13,9 @@
             </svg>
         </span>
         </li>
-        <li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block {{ $currentStep == 2 ? 'dark:after:border-blue-800' : 'dark:after:border-gray-700' }} ">
+        <li class="flex w-full items-center after:content-[''] after:w-full after:h-1 after:border-b after:border-gray-100 after:border-4 after:inline-block {{ $currentStep == 2  || $currentStep == 3 ? 'dark:after:border-blue-800' : 'dark:after:border-gray-700' }} ">
         <span
-            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 {{$currentStep == 2 ? 'dark:bg-blue-800' : 'dark:bg-gray-700'}} shrink-0">
+            class="flex items-center justify-center w-10 h-10 bg-gray-100 rounded-full lg:h-12 lg:w-12 {{$currentStep == 2 || $currentStep == 3 ? 'dark:bg-blue-800' : 'dark:bg-gray-700'}} shrink-0">
             <svg class="w-4 h-4 text-gray-500 lg:w-5 lg:h-5 dark:text-gray-100" aria-hidden="true"
                  xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                 <path
@@ -34,15 +34,11 @@
         </span>
         </li>
     </ol>
-
-
     <!-- end step indicators -->
     <span class="text-gray-400 block mb-3">{{ __($messages[$currentStep]) }}</span>
 
     <span id="countdown" class="block text-gray-50 text-3xl"></span>
-
-
-    {{-- step one --}}
+    {{-- step one--}}
     @if ($currentStep === 1)
         <form id="orderForm" class="text-left mx-auto p-6 mb-4" wire:submit="createOrder">
             <div class="mb-6 space-y-4">
@@ -174,15 +170,61 @@
                     </div>
                 </div>
             </div>
-            <div class="text-left mt-4">
+            <div class="text-left mt-6">
                 <button type="submit" {{ $enableSumbitStageOne ? '' : 'disabled' }}
                 class="text-white {{ $enableSumbitStageOne ? 'dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 w-full text-center transition duration-150 ease-in-out">
                     {{ __('all.submit') }}
                 </button>
             </div>
         </div>
+        {{--         Step Three--}}
     @elseif($currentStep === 3)
-        finish
+        <div class="p-6 space-y-4">
+            <div class="flex items-center justify-center">
+                <div class="w-24 h-24 rounded-full bg-green-100 flex items-center justify-center">
+                    <svg class="w-12 h-12 text-green-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                </div>
+            </div>
+            <h2 class="text-2xl font-medium text-gray-900 dark:text-white text-center">{{ __('all.thank_you') }}</h2>
+            <p class="text-gray-500 dark:text-gray-300 text-center">{{ __('all.order_placed') }}</p>
+
+            <div class="bg-gray-100 dark:bg-gray-700 rounded-lg p-4">
+                <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ __('all.order_summary') }}</h3>
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-300">
+                            <span
+                                class="font-medium text-gray-900 dark:text-white">{{ __('all.amount_to_sell') }}:</span> {{ $fiatRub }}
+                            RUB
+                        </p>
+                    </div>
+                    <div class="flex items-center mx-4">
+                        <svg class="h-6 w-6 text-gray-500 dark:text-gray-300" fill="none" stroke="currentColor"
+                             stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                        </svg>
+                    </div>
+                    <div>
+                        <p class="text-gray-500 dark:text-gray-300">
+                            <span
+                                class="font-medium text-gray-900 dark:text-white">{{ __('all.amount_to_receive') }}:</span> {{ $fiatUsd }}
+                            USD
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-center">
+                <button type="button" wire:click="resetForm"
+                        class="text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-4 focus:ring-indigo-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                    {{ __('all.another_order') }}
+                </button>
+            </div>
+        </div>
     @endif
 </div>
 
