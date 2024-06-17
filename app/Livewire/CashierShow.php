@@ -30,6 +30,14 @@ class CashierShow extends Component
     {
         $order = Orders::where(['user_id' => auth()->user()->id, 'status' => 0])->first();
         $this->cashier = \App\Models\Cashier::find($this->id) ?? '';
+
+        if (isset($order) && ($this->defaultTimeOrder - (time() - strtotime($order->created_at))) <= 0) {
+            $order->delete();
+            $this->currentStep = 1;
+            $this->fiatRub = round(floatval($this->cashier->price_per_dollar) * intval($this->fiatUsd), 2);
+            return;
+        }
+
         if (isset($order)) {
             $this->currentStep = 2;
             $this->order = $order;

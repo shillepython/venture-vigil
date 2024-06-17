@@ -18,4 +18,14 @@ class Orders extends Model
         'status',
         'check'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function cashier()
+    {
+        return $this->hasOne(Cashier::class, 'id', 'cashier_id');
+    }
 }

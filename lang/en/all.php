@@ -8,7 +8,7 @@ return [
     'log_out' => 'Log Out',
     'welcome_vv' => 'Welcome to Venture Vigil!',
     'welcome_vv_desc' => 'The largest investment exchange in the world',
-    'cashier_details' => 'Cashier details',
+    'cashier_details' => 'Beneficiary details',
     'cashier_desc' => 'Create an order using the cash register of :name financial manager',
     'create_order' => 'Create order',
     'balance' => 'Balance',

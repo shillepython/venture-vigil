@@ -18,6 +18,14 @@
                     <x-nav-link href="{{ route('cashier') }}" :active="request()->routeIs('cashier')">
                         {{ __('all.cashiers') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('trading.index') }}" :active="request()->routeIs('trading.index')">
+                        {{ __('Trading') }}
+                    </x-nav-link>
+                    @role('admin')
+                        <x-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
+                            {{ __('Orders') }}
+                        </x-nav-link>
+                    @endrole
                 </div>
             </div>
 

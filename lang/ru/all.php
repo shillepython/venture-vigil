@@ -8,7 +8,7 @@ return [
     'log_out' => 'Выход',
     'welcome_vv' => 'Добро пожаловать в Venture Vigil!',
     'welcome_vv_desc' => 'Крупнейшая биржа инвестиций в мире',
-    'cashier_details' => 'Детали касира',
+    'cashier_details' => 'Детали бенефициара',
     'cashier_desc' => 'Создайте заказ с помощью кассового аппарата финансового менеджера :name',
     'create_order' => 'Создать ордер',
     'balance' => 'Баланс',

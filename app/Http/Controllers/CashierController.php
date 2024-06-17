@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cashier;
+
 class CashierController extends Controller
 {
     public function index()
@@ -11,6 +13,10 @@ class CashierController extends Controller
 
     public function show($id)
     {
+        $cashier = Cashier::find($id);
+        if (!$cashier) {
+            return redirect()->back();
+        }
         return view('cashier.show', ['id' => $id]);
     }
 }
