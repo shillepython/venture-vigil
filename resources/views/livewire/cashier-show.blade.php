@@ -232,32 +232,38 @@
 
 @script
 <script>
+    let amountTime = {{ $timer ?? 900 }};
+    let intervalId;
+
+    const countdown = document.querySelector("#countdown");
+
+    function calculateTime() {
+        const minutes = Math.floor(amountTime / 60).toString().padStart(2, '0');
+        const seconds = (amountTime % 60).toString().padStart(2, '0');
+
+        countdown.textContent = `${minutes}:${seconds}`;
+        amountTime--;
+
+        if (amountTime < 0) {
+            stopTimer();
+            amountTime = 0;
+        }
+    }
+
+    function stopTimer() {
+        clearInterval(intervalId);
+    }
+
     $wire.on('start-timer', () => {
-        let amountTime = {{ $timer ?? 900 }};
-        let intervalId;
-
-        const countdown = document.querySelector("#countdown");
-
-        function calculateTime() {
-            const minutes = Math.floor(amountTime / 60).toString().padStart(2, '0');
-            const seconds = (amountTime % 60).toString().padStart(2, '0');
-
-            countdown.textContent = `${minutes}:${seconds}`;
-            amountTime--;
-
-            if (amountTime < 0) {
-                stopTimer();
-                amountTime = 0;
-            }
-        }
-
-        function stopTimer() {
-            clearInterval(intervalId);
-        }
-
         if (amountTime > 0) {
             intervalId = setInterval(calculateTime, 1000);
         }
+    });
+
+    $wire.on('delete-timer', () => {
+        stopTimer();
+        amountTime = 0;
+        document.querySelector("#countdown").remove()
     });
 </script>
 @endscript

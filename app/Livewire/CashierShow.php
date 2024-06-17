@@ -17,6 +17,7 @@ class CashierShow extends Component
     public $fiatRub;
     public $order;
     public $timer;
+    public $paymentSuccess = false;
     public $defaultTimeOrder = 900;
 
     public $messages = [
@@ -64,7 +65,11 @@ class CashierShow extends Component
 
     public function submitPayment()
     {
+        $this->order->status = 1;
+        $this->order->save();
+        $this->paymentSuccess = true;
         $this->currentStep = 3;
+        $this->dispatch('delete-timer');
     }
 
     #[On('stop-timer')]
