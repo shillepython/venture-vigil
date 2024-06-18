@@ -26,6 +26,7 @@ class Order extends Component
         $order->save();
 
         $this->reset();
+        $this->orders = Orders::where(['status' => 1])->get();
     }
 
     public function render()
