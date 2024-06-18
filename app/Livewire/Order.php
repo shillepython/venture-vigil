@@ -19,7 +19,7 @@ class Order extends Component
     {
         $order = Orders::find($orderId);
         $user = User::find($userId);
-        $user->balance += $amount;
+        $user->balance += round($amount, 2);
         $user->save();
 
         $order->status = 2;

@@ -136,6 +136,7 @@
                 </div>
                 <h3 class="dark:text-white text-md">{{ __('all.order') }}: {{ $order->id }}</h3>
                 <h3 class="dark:text-white text-md">{{ __('all.order_date') }}: {{ $order->created_at }}</h3>
+                <h3 class="dark:text-white text-center text-lg border border-gray-200 dark:border-green-100 rounded px-4 py-2">{{ __('Amount') }}: {{ $fiatRub }}</h3>
                 <div class="flex flex-col items-center">
                     <p class="text-white-text-md text-gray-400">{{ __('all.details_below') }}</p>
 

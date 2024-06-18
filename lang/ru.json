@@ -46,5 +46,6 @@
     "Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.": "Когда аккаунт будет удален, все его ресурсы и данные будут удалены навсегда. Перед удалением аккаунта, пожалуйста, загрузите любые данные или информацию, которые вы хотите сохранить.",
     "Are you sure you want to delete your account? Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.": "Вы уверены, что хотите удалить аккаунт? Когда аккаунт будет удален, все его ресурсы и данные будут удалены навсегда. Пожалуйста, введите пароль, чтобы подтвердить, что вы хотите удалить аккаунт навсегда.",
     "Orders": "Ордера",
-    "Trading": "Торговля"
+    "Trading": "Торговля",
+    "Amount": "Сумма"
 }

@@ -41,7 +41,7 @@
                                 {{ $order->amount }}
                             </td>
                             <td class="px-6 py-4">
-                                {{ ($order->amount / $order->cashier->price_per_dollar) }}
+                                {{ round($order->amount / $order->cashier->price_per_dollar, 2) }}
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <button wire:click="sumbitAmmount({{ ($order->amount / $order->cashier->price_per_dollar) }}, {{ $order->user->id }}, {{ $order->id }})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sumbit</button>

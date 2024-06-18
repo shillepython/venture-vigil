@@ -41,7 +41,7 @@ class CashierShow extends Component
         if (isset($order)) {
             $this->currentStep = 2;
             $this->order = $order;
-
+            $this->fiatRub = round($this->order->amount, 2);
             $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
             $this->dispatch('start-timer');
             return;
@@ -112,7 +112,7 @@ class CashierShow extends Component
 
     public function setUsd($fiat)
     {
-        $this->fiatUsd = $fiat;
+        $this->fiatUsd = round($fiat, 2);
         $this->updatedFiatUsd();
     }
 
