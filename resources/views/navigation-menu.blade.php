@@ -19,9 +19,6 @@
                         {{ __('all.cashiers') }}
                     </x-nav-link>
                     @role('admin')
-                        <x-nav-link href="{{ route('trading.index') }}" :active="request()->routeIs('trading.index')">
-                            {{ __('Trading') }}
-                        </x-nav-link>
                         <x-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
                             {{ __('Orders') }}
                         </x-nav-link>
@@ -161,9 +158,6 @@
                 {{ __('all.cashiers') }}
             </x-responsive-nav-link>
             @role('admin')
-            <x-responsive-nav-link href="{{ route('trading.index') }}" :active="request()->routeIs('trading.index')">
-                {{ __('Trading') }}
-            </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
                 {{ __('Orders') }}
             </x-responsive-nav-link>

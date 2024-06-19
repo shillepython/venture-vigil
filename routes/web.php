@@ -17,7 +17,6 @@ Route::middleware([
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.list');
-        Route::get('/trading', [TradingController::class, 'index'])->name('trading.index');
     });
 
     Route::get('/dashboard', function () {
