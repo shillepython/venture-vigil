@@ -49,5 +49,6 @@
     "Trading": "Торговля",
     "Amount": "Сумма",
     "Wait for confirmation of your documents to start trading.": "Ожидайте подтверждения ваших документов для начала торговли",
-    "Your credentials have been verified": "Ваши документы подтверждены"
+    "Your credentials have been verified": "Ваши документы подтверждены",
+    "Upload payment check": "Загрузите чек оплаты"
 }

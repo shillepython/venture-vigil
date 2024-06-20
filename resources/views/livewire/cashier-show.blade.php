@@ -172,6 +172,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="mt-6">
+                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="check">
+                        {{ __('Upload payment check') }}
+                    </label>
+                    <input wire:model="check" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="check" type="file">
+                </div>
                 <div class="text-left mt-6">
                     <button type="submit" {{ $enableSumbitStageOne ? '' : 'disabled' }}
                     class="text-white {{ $enableSumbitStageOne ? 'dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 w-full text-center transition duration-150 ease-in-out">

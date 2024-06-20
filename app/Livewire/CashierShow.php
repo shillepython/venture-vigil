@@ -3,13 +3,19 @@
 namespace App\Livewire;
 
 use App\Models\Orders;
+use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\Attributes\On;
+use Livewire\WithFileUploads;
 
 class CashierShow extends Component
 {
+    use WithFileUploads;
+
     public $id;
     public $cashier;
+
+    public $check;
     public $minFiatUsdMessage;
     public $currentStep;
     public $enableSumbitStageOne = true;
@@ -41,6 +47,7 @@ class CashierShow extends Component
         if (isset($order)) {
             $this->currentStep = 2;
             $this->order = $order;
+            $this->enableSumbitStageOne = false;
             $this->fiatRub = round($this->order->amount, 2);
             $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
             $this->dispatch('start-timer');
@@ -59,6 +66,7 @@ class CashierShow extends Component
         ]);
         $this->currentStep = 2;
 
+        $this->enableSumbitStageOne = false;
         $this->timer = $this->defaultTimeOrder - (time() - strtotime($this->order->created_at));
         $this->dispatch('start-timer');
     }
@@ -114,6 +122,20 @@ class CashierShow extends Component
     {
         $this->fiatUsd = round($fiat, 2);
         $this->updatedFiatUsd();
+    }
+
+    public function updatedCheck()
+    {
+        $this->validate([
+            'check' => 'mimes:svg,jpg,jpeg,gif,png,pdf',
+        ]);
+
+        $originalName = Str::random(40) . $this->check->getClientOriginalName();
+        $this->check->storeAs('orders', $originalName, 'public');
+        $this->order->check = '/storage/orders/' . $originalName;
+        $this->order->save();
+
+        $this->enableSumbitStageOne = true;
     }
 
     public function render()
