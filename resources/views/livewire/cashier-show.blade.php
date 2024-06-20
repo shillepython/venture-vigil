@@ -58,8 +58,7 @@
                         <div class="block grow">
                             <label for="sell-amount"
                                    class="block mb-2 text-md font-medium text-gray-900 dark:text-white">{{ __('all.amount') }}
-                                $ <strong
-                                    class="ml-1 bg-red-100 text-red-800 text-sm font-medium me-2 px-2 py-0.5 rounded dark:bg-red-900 dark:text-red-300">{{ __('all.min_amount', ['amount' => 100]) }}</strong></label>
+                                $</label>
                             <input wire:model.live.debounce.1000ms="fiatUsd" step="0.01" type="number" min="100" max="10000"
                                    id="sell-amount"
                                    name="sell-amount"
@@ -70,7 +69,7 @@
                     <span class="text-sm py-2 text-red-800">{{ $minFiatUsdMessage }}</span>
 
                     <div
-                        class="mt-3 flex items-center space-x-2 text-gray-800 dark:text-gray-300 text-xs font-medium select-none">
+                        class="mt-3 flex items-center space-x-2 flex-wrap text-gray-800 dark:text-gray-300 text-xs font-medium select-none">
                         <span wire:click="setUsd(100)"
                               class="bg-gray-100 px-3 py-1 rounded dark:bg-gray-700 dark:hover:bg-green-500 transition-colors cursor-pointer">100</span>
                         <span wire:click="setUsd(150)"
@@ -116,8 +115,8 @@
             </button>
         </form>
     @elseif($currentStep === 2)
-        <form id="submitPayment" class="text-left mx-auto p-6 mb-4" wire:submit="submitPayment">
-            <div class="p-6 space-y-4">
+        <form id="submitPayment" class="text-left mx-auto sm:p-6 mb-4" wire:submit="submitPayment">
+            <div class="sm:p-6 sm:space-y-4">
                 <div
                     class="p-4 my-3 text-yellow-800 border border-yellow-300 rounded-lg bg-yellow-50 dark:bg-gray-800 dark:text-yellow-300 dark:border-yellow-800 max-w-1/"
                     role="alert">
@@ -169,6 +168,13 @@
                             <input type="text" id="card-number-input" value="{{ $cashier->card_number }}"
                                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-md text-center text-gray-900 focus:border-primary-500 focus:ring-primary-500  dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                                    placeholder="xxxx-xxxx-xxxx-xxxx" pattern="^4[0-9]{12}(?:[0-9]{3})?$" disabled/>
+                            <div class="flex flex-col items-center justify-center">
+                                <button type="button" id="card-number-copy"
+                                        class="text-white mt-2 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-3 py-2.5 w-26 text-center transition duration-150 ease-in-out">
+                                    {{ __('Copy card') }}
+                                </button>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -239,6 +245,12 @@
 
 @script
 <script>
+
+    document.getElementById("card-number-copy").addEventListener("click", function() {
+        let copyText = document.getElementById("card-number-input").value;
+        navigator.clipboard.writeText(copyText)
+    });
+
     let amountTime = {{ $timer ?? 900 }};
     let intervalId;
 
