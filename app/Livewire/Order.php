@@ -12,7 +12,7 @@ class Order extends Component
 
     public function mount()
     {
-        $this->orders = Orders::where(['status' => 1])->get();
+        $this->orders = Orders::where(['status' => 1])->orderBy('created_at', 'desc')->get();
     }
 
     public function sumbitAmmount($amount, $userId, $orderId)
@@ -26,7 +26,7 @@ class Order extends Component
         $order->save();
 
         $this->reset();
-        $this->orders = Orders::where(['status' => 1])->get();
+        $this->orders = Orders::where(['status' => 1])->orderBy('created_at', 'desc')->get();
     }
 
     public function render()

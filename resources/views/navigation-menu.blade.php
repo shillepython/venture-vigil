@@ -22,6 +22,9 @@
                         <x-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
                             {{ __('Orders') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
+                            {{ __('Verification') }}
+                        </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -180,11 +183,14 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('cashier') }}" :active="request()->routeIs('cashier')">
                 {{ __('all.cashiers') }}
-            </x-responsive-nav-link>
-            @role('admin')
-            <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
-                {{ __('Orders') }}
-            </x-responsive-nav-link>
+                </x-responsive-nav-link>
+                @role('admin')
+                <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
+                    {{ __('Orders') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
+                    {{ __('Verification') }}
+                </x-responsive-nav-link>
             @endrole
         </div>
 

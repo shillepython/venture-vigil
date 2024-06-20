@@ -15,4 +15,9 @@ class Verification extends Model
         'billing',
         'user_id'
     ];
+
+    public function user()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
 }

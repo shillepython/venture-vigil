@@ -3,6 +3,7 @@
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TradingController;
+use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,6 +18,7 @@ Route::middleware([
 
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.list');
+        Route::get('/verification', [VerificationController::class, 'list'])->name('verification.list');
     });
 
     Route::get('/dashboard', function () {
