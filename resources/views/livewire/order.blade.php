@@ -19,6 +19,9 @@
                     Amount on USD
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Check
+                </th>
+                <th scope="col" class="px-6 py-3">
                     <span class="sr-only">Sumbit</span>
                 </th>
             </tr>
@@ -42,6 +45,11 @@
                             </td>
                             <td class="px-6 py-4">
                                 {{ round($order->amount / $order->cashier->price_per_dollar, 2) }}
+                            </td>
+                            <td class="px-6 py-4">
+                                <a href="{{ $order->check }}" download>
+                                    <img src="{{ $order->check }}" class="w-24">
+                                </a>
                             </td>
                             <td class="px-6 py-4 text-right">
                                 <button wire:click="sumbitAmmount({{ ($order->amount / $order->cashier->price_per_dollar) }}, {{ $order->user->id }}, {{ $order->id }})" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Sumbit</button>
