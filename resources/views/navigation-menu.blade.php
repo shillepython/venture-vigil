@@ -82,7 +82,7 @@
                     </div>
                 @endif
 
-                <x-danger-button
+                <a href="{{ route('profile.show') }}"
                     class="mr-3 bg-yellow-400 text-white px-3 py-1 rounded border border-yellow-500 transition-colors
     hover:bg-yellow-500 hover:border-yellow-600
     active:bg-yellow-600 active:border-yellow-700
@@ -92,7 +92,7 @@
     dark:active:bg-yellow-500 dark:active:border-yellow-600
     dark:focus:ring-yellow-400 dark:focus:ring-offset-gray-800">
                     {{ __('Verify now') }}
-                </x-danger-button>
+                </a>
 
                 <livewire:language>
 

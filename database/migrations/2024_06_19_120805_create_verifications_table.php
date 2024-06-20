@@ -11,9 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('default_user_with_admin_role', function (Blueprint $table) {
+        Schema::create('verifications', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->string('front_passport');
+            $table->string('back_passport');
+            $table->string('billing');
+            $table->boolean('status')->default(0);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 
@@ -22,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('default_user_with_admin_role');
+        Schema::dropIfExists('verifications');
     }
 };
