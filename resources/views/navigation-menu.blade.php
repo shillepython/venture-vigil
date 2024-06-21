@@ -25,6 +25,9 @@
                         <x-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
                             {{ __('Verification') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
+                            {{ __('Users') }}
+                        </x-nav-link>
                     @endrole
                 </div>
             </div>
@@ -85,17 +88,19 @@
                     </div>
                 @endif
 
-                <a href="{{ route('profile.show') }}"
-                    class="mr-3 bg-yellow-400 text-white px-3 py-1 rounded border border-yellow-500 transition-colors
-    hover:bg-yellow-500 hover:border-yellow-600
-    active:bg-yellow-600 active:border-yellow-700
-    focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2
-    dark:bg-yellow-300 dark:text-gray-800 dark:border-yellow-400
-    dark:hover:bg-yellow-400 dark:hover:border-yellow-500
-    dark:active:bg-yellow-500 dark:active:border-yellow-600
-    dark:focus:ring-yellow-400 dark:focus:ring-offset-gray-800">
-                    {{ __('Verify now') }}
-                </a>
+                @if(!isset(Auth::user()->verifications) || Auth::user()->verifications->status == 0)
+                    <a href="{{ route('profile.show') }}"
+                        class="mr-3 bg-yellow-400 text-white px-3 py-1 rounded border border-yellow-500 transition-colors
+        hover:bg-yellow-500 hover:border-yellow-600
+        active:bg-yellow-600 active:border-yellow-700
+        focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-offset-2
+        dark:bg-yellow-300 dark:text-gray-800 dark:border-yellow-400
+        dark:hover:bg-yellow-400 dark:hover:border-yellow-500
+        dark:active:bg-yellow-500 dark:active:border-yellow-600
+        dark:focus:ring-yellow-400 dark:focus:ring-offset-gray-800">
+                        {{ __('Verify now') }}
+                    </a>
+                @endif
 
                 <livewire:language>
 
@@ -115,7 +120,7 @@
                                     <span class="inline-flex rounded-md">
                                     <button type="button"
                                             class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none focus:bg-gray-50 dark:focus:bg-gray-700 active:bg-gray-50 dark:active:bg-gray-700 transition ease-in-out duration-150">
-                                        {{ Auth::user()->name }}
+                                        {{ Auth::user()->first_name . ' ' . Auth::user()->last_name }}
 
                                         <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none"
                                              viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
