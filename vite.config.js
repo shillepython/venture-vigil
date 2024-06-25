@@ -12,8 +12,7 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/js/index.jsx',
-                'resources/react/app.tsx'
+                'resources/react/index.jsx'
             ],
             refresh: true,
         }),
