@@ -35,7 +35,7 @@
                                 <livewire:custom-dropzone
                                     wire:model="passportFront"
                                     :rules="['mimes:png,jpg,jpeg,svg,gif', 'max:10420']"
-                                    :multiple="true"
+                                    :multiple="false"
                                     :label="__('Passport Front')"
                                 />
                                 @error('passportFront') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -45,7 +45,7 @@
                                 <livewire:custom-dropzone
                                     wire:model="passportBack"
                                     :rules="['mimes:png,jpg,jpeg,svg,gif', 'max:10420']"
-                                    :multiple="true"
+                                    :multiple="false"
                                     :label="__('Passport Back')"
                                 />
                                 @error('passportBack') <span class="text-red-500">{{ $message }}</span> @enderror
@@ -55,7 +55,7 @@
                                 <livewire:custom-dropzone
                                     wire:model="proofOfAddress"
                                     :rules="['mimes:png,jpg,jpeg,svg,gif', 'max:10420']"
-                                    :multiple="true"
+                                    :multiple="false"
                                     :label="__('Proof of the Address')"
                                 />
                                 @error('proofOfAddress') <span class="text-red-500">{{ $message }}</span> @enderror
