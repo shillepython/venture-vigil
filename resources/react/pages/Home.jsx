@@ -273,7 +273,7 @@ const ContactSection = () => {
         setSubmissionStatus({ isSubmitting: true, isSuccess: false, error: null });
 
         try {
-            const response = await fetch(`http://venture-vigil/api/callback-form`, {
+            const response = await fetch(`https://venture-vigil.com/api/callback-form`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
