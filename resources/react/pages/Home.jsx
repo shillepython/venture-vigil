@@ -92,12 +92,12 @@ const Header = () => {
 };
 
 const ParallaxSection = () => {
-    const [userCount, setUserCount] = useState(9876);
+    const [userCount, setUserCount] = useState(2256761);
 
     useEffect(() => {
         const interval = setInterval(() => {
             setUserCount(prevCount => prevCount + 1);
-        }, 5000); // Increase count every 5 seconds
+        }, 3000); // Increase count every 5 seconds
 
         return () => clearInterval(interval);
     }, []);
@@ -299,8 +299,8 @@ const ContactSection = () => {
         <section className="py-16 md:py-24 bg-gray-900">
             <div className="container mx-auto px-4">
                 <h2 className="text-3xl md:text-4xl font-bold text-center text-white mb-16">
-                    Мы свяжемся с <span
-                    className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">Вами</span>
+                    Инвестируйте в своё <span
+                    className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">будущее</span>
                 </h2>
                 <div className="">
                     <motion.div
@@ -648,11 +648,11 @@ const Home = () => {
 
 
             <main className="flex-grow">
+                <ContactSection/>
                 <FeatureSection/>
                 <ParallaxSection/>
                 <AnalyticsSection/>
                 <AdditionalFeaturesSection/>
-                <ContactSection/>
             </main>
 
             <Footer/>
