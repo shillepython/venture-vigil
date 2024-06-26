@@ -4,9 +4,8 @@
     "scripts": {
         "dev": "vite",
         "build": "vite build",
-        "prod": "cross-env NODE_ENV=production vite build",
         "serve": "serve -s build",
-        "prod": "npm run build && npm run serve"
+        "prod": "cross-env NODE_ENV=production npm run build && npm run serve"
     },
     "devDependencies": {
         "@tailwindcss/forms": "^0.5.7",
@@ -23,6 +22,7 @@
         "@tabler/icons-react": "^3.6.0",
         "@vitejs/plugin-react": "^4.3.1",
         "clsx": "^2.1.1",
+        "cross-env": "^7.0.3",
         "dotenv": "^16.4.5",
         "framer-motion": "^11.2.11",
         "react": "^18.3.1",
@@ -31,6 +31,7 @@
         "react-element-to-jsx-string": "^15.0.0",
         "react-responsive-modal": "^6.4.2",
         "react-toastify": "^10.0.5",
+        "serve": "^14.2.3",
         "tailwind-merge": "^2.3.0"
     }
 }
