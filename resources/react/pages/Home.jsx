@@ -273,7 +273,7 @@ const ContactSection = () => {
         setSubmissionStatus({ isSubmitting: true, isSuccess: false, error: null });
 
         try {
-            const response = await fetch(`http://localhost/api/callback-form`, {
+            const response = await fetch(`http://venture-givil/api/callback-form`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
