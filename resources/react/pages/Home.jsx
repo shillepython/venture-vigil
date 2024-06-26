@@ -302,9 +302,9 @@ const ContactSection = () => {
                     Мы свяжемся с <span
                     className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-green-400">Вами</span>
                 </h2>
-                <div className="flex flex-col md:flex-row justify-center">
+                <div className="">
                     <motion.div
-                        className="w-full md:w-1/2"
+                        className="w-full md:w-1/2 xl:w-1/3 mx-auto"
                         initial={{opacity: 0, x: -50}}
                         animate={{opacity: 1, x: 0}}
                         transition={{duration: 0.5}}
@@ -316,7 +316,7 @@ const ContactSection = () => {
                                 <input
                                     type="text"
                                     id="firstname"
-                                    name="firstname"
+                                    name="first_name"
                                     value={formState.first_name}
                                     onChange={handleInputChange}
                                     required
@@ -329,7 +329,7 @@ const ContactSection = () => {
                                 <input
                                     type="text"
                                     id="lastname"
-                                    name="lastname"
+                                    name="last_name"
                                     value={formState.last_name}
                                     onChange={handleInputChange}
                                     required
