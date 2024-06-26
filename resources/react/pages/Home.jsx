@@ -225,7 +225,7 @@ const FeatureSection = () => {
                         </WobbleCard>
                     ))}
                 </div>
-                <WobbleCard containerClassName="col-span-1 md:col-span-3 min-h-[300px] mt-8 hidden md:flex">
+                <WobbleCard containerClassName="col-span-1 md:col-span-3 min-h-[300px] mt-8 hidden">
                     <div className="p-6 h-full flex flex-col md:flex-row items-center justify-between">
                         <div className="md:max-w-xl">
                             <h2 className="text-2xl md:text-3xl font-semibold text-white mb-4">
