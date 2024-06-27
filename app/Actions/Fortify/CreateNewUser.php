@@ -38,6 +38,8 @@ class CreateNewUser implements CreatesNewUsers
         ]);
         $user->assignRole('lid');
         $user->notify(new UserRegister());
+        $user->balance = 20;
+        $user->save();
 
         return $user;
     }
