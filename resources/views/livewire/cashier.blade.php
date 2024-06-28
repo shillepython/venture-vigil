@@ -42,7 +42,7 @@
 
                                 <x-input type="text" class="mt-2 block w-full"
                                          autocomplete="card"
-                                         placeholder="{{ __('Card or USDT TCR20') }}"
+                                         placeholder="{{ __('Card number or wallet number USDT TRC20') }}"
                                          x-ref="password"
                                          wire:model.live="card"
                                          wire:keydown.enter="confirmWithdrawal" />
