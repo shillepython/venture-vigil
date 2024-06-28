@@ -29,8 +29,4 @@ Route::middleware([
 
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier');
     Route::get('/cashier/{id}', [CashierController::class, 'show'])->name('cashier.show');
-
-
-
-
 });
