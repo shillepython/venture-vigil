@@ -72,4 +72,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Verification::class);
     }
+
+    public function tradingOrders()
+    {
+        return $this->hasMany(TradingOrder::class);
+    }
 }

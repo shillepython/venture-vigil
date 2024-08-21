@@ -3,6 +3,7 @@
 use App\Http\Controllers\CashierController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\TradingController;
+use App\Http\Controllers\TradingOrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
 use Illuminate\Support\Facades\Route;
@@ -26,6 +27,11 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
+
+    Route::post('/trading-orders', [TradingOrderController::class, 'store'])->name('trading_orders.store');
+
+    // Маршрут для закрытия ордера
+    Route::delete('/trading-orders/{order}', [TradingOrderController::class, 'closeOrder'])->name('trading_orders.close');
 
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier');
     Route::get('/cashier/{id}', [CashierController::class, 'show'])->name('cashier.show');

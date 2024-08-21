@@ -1,8 +1,8 @@
-@servers(['vigil' => 'u180353749@45.84.204.18 -p 65002'])
+@servers(['vigil' => 'u236394466@46.17.175.200 -p 65002'])
 
 
 @task('deploy', ['on' => 'vigil'])
-cd /home/u180353749/domains/venture-vigil.com
+cd /home/u236394466/domains/venture-vigil.pro
 set -e
 echo "Deploying..."
 git pull origin main
