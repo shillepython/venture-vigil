@@ -104,6 +104,9 @@ class Trading extends Component
 
         $user = Auth::user();
         $user->balance -= $tradeAmount;
+        if ($user->balance < 0) {
+            $user->balance = 0;
+        }
         $user->save();
 
         $this->lastOrderType = $type;
@@ -149,6 +152,9 @@ class Trading extends Component
 
         $user = Auth::user();
         $user->balance = round($user->balance + $order->volume + $profit, 3);
+        if ($user->balance < 0) {
+            $user->balance = 0;
+        }
         $user->save();
 
         $order->delete();
