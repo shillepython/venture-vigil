@@ -19,7 +19,7 @@ class CashierShow extends Component
     public $minFiatUsdMessage;
     public $currentStep;
     public $enableSumbitStageOne = true;
-    public $fiatUsd = 100;
+    public $fiatUsd = 0;
     public $fiatRub;
     public $order;
     public $timer;
@@ -95,8 +95,8 @@ class CashierShow extends Component
     {
         $this->minFiatUsdMessage = '';
         $this->enableSumbitStageOne = true;
-        if ($this->fiatUsd < 100) {
-            $this->minFiatUsdMessage = 'USD purchase amount must be at least 100';
+        if ($this->fiatUsd < 500) {
+            $this->minFiatUsdMessage = 'USD purchase amount must be at least 500';
             $this->enableSumbitStageOne = false;
             return;
         }
@@ -112,8 +112,8 @@ class CashierShow extends Component
         }
 
         $this->fiatUsd = round(intval($this->fiatRub) / floatval($this->cashier->price_per_dollar), 2);
-        if ($this->fiatUsd < 100) {
-            $this->minFiatUsdMessage = 'USD purchase amount must be at least 100';
+        if ($this->fiatUsd < 500) {
+            $this->minFiatUsdMessage = 'USD purchase amount must be at least 500';
             $this->enableSumbitStageOne = false;
         }
     }
