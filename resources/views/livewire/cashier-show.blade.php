@@ -107,7 +107,7 @@
                 <span
                     class="block mt-4 text-sm text-gray-500 dark:text-gray-300">{{ __('all.price_per_dollar', ['price' => $cashier->price_per_dollar]) }}</span>
                 <span
-                    class="block text-sm text-gray-500 dark:text-gray-300">{{ __('all.min_amount_warning', ['amount' => 100]) }}</span>
+                    class="block text-sm text-gray-500 dark:text-gray-300">{{ __('all.min_amount_warning', ['amount' => 500]) }}</span>
             </div>
             <button type="submit" {{ $enableSumbitStageOne ? '' : 'disabled' }}
             class="text-white {{ $enableSumbitStageOne ? 'dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800' : 'dark:bg-gray-600' }} bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-md px-5 py-2.5 w-full sm:w-auto text-center transition duration-150 ease-in-out">
