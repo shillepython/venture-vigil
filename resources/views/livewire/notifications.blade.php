@@ -14,6 +14,10 @@
                         <div class="px-4 py-2 border-b border-gray-300 flex justify-between items-center">
                             <div>
                                 <p class="text-gray-300">{{ $notification->data['reason'] ?? 'Уведомление' }}</p>
+                                @if(isset($notification->data['withdrawal_id']))
+                                    <br>
+                                    <p class="text-gray-400 text-sm">Вывод средств, сумма: {{ \App\Models\OrdersWithdrawal::find($notification->data['withdrawal_id'])->amount }}$</p>
+                                @endif
                                 <p class="text-sm text-gray-300">{{ $notification->created_at->diffForHumans() }}</p>
                             </div>
                             <button wire:click="deleteNotification('{{ $notification->id }}')" class="text-red-600 hover:text-red-800">

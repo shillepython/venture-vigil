@@ -30,11 +30,6 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::post('/trading-orders', [TradingOrderController::class, 'store'])->name('trading_orders.store');
-
-    // Маршрут для закрытия ордера
-    Route::delete('/trading-orders/{order}', [TradingOrderController::class, 'closeOrder'])->name('trading_orders.close');
-
     Route::get('/cashier', [CashierController::class, 'index'])->name('cashier');
     Route::get('/cashier/{id}', [CashierController::class, 'show'])->name('cashier.show');
 });

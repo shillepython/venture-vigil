@@ -50,7 +50,7 @@ class WithdrawalView extends Component
         $user = User::find($withdrawal->user_id);
 
         if ($this->statusUpdate == 2 && empty($this->reason)) {
-            $this->reason = "Для вывода средств необходимо пополнить баланс на бирже на сумму - 500$";
+            $this->reason = "Для вывода средств необходимо пополнить баланс на бирже";
         }
 
         if ($this->statusUpdate == 1) {
