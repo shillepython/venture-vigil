@@ -88,7 +88,7 @@ class Trading extends Component
             $this->volume = 1;
         } else {
             // Округляем значение до 2 знаков после запятой
-            $this->volume = round($this->volume, 2);
+            $this->volume = round($this->volume, 3);
         }
 
         $this->updateTradeAmount(); // Обновляем сумму сделки
