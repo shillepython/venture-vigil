@@ -14,6 +14,7 @@ class UsersList extends Component
     public $last_name;
     public $phone;
     public $balance;
+    public $successRate;
     public $notification; // Свойство для текста уведомления
     public $isModalOpen = false;
 
@@ -33,6 +34,7 @@ class UsersList extends Component
         $this->last_name = $user->last_name;
         $this->phone = $user->phone;
         $this->balance = $user->balance;
+        $this->successRate = $user->successRate;
 
         $this->isModalOpen = true;
     }
@@ -49,6 +51,7 @@ class UsersList extends Component
         $this->last_name = '';
         $this->phone = '';
         $this->balance = '';
+        $this->successRate = '';
         $this->notification = ''; // Сброс текста уведомления
     }
 
@@ -58,6 +61,7 @@ class UsersList extends Component
             'first_name' => 'required',
             'last_name' => 'required',
             'phone' => 'required',
+            'successRate' => 'required',
             'balance' => 'required|numeric',
         ]);
 
@@ -68,12 +72,24 @@ class UsersList extends Component
                 'last_name' => $this->last_name,
                 'phone' => $this->phone,
                 'balance' => $this->balance,
+                'successRate' => $this->successRate,
             ]);
         }
 
         $this->closeModal();
 
         $this->dispatch('refreshComponent');
+    }
+
+    public function updatedSuccessRate()
+    {
+        if ($this->successRate > 100) {
+            $this->successRate = 100;
+        }
+
+        if ($this->successRate < 0) {
+            $this->successRate = 0;
+        }
     }
 
     public function sendNotification()

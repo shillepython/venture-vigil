@@ -1,6 +1,6 @@
 <div>
     @if(isset(Auth::user()->verifications) && Auth::user()->verifications->status == 1)
-        <div class="flex flex-col lg:flex-row h-screen">
+        <div class="flex flex-col lg:flex-row">
             <!-- Левая панель управления -->
             <div class="w-full lg:w-2/12 bg-gray-800 text-white p-4">
                 <h2 class="text-xl font-bold mb-4">Управление</h2>
@@ -23,7 +23,7 @@
             </div>
 
             <!-- Правая часть с графиком и ордерами -->
-            <div class="w-full lg:w-10/12 bg-gray-100 p-4">
+            <div class="w-full lg:w-10/12 bg-gray-700 p-4">
                 <!-- График -->
                 <div class="bg-gray-900 text-white p-4 rounded mb-4" wire:ignore>
                     <h3 id="current-price" class="text-lg font-bold">Текущая цена: {{ $currentPrice }}</h3>
@@ -35,7 +35,7 @@
                     <h3 class="text-lg font-bold mb-2">Открытые ордера</h3>
                     <table class="table-auto w-full min-w-[600px]">
                         <thead class="bg-gray-800 text-white">
-                        <tr>
+                        <tr class="text-center">
                             <th class="px-4 py-2">Актив</th>
                             <th class="px-4 py-2">Тип</th>
                             <th class="px-4 py-2">Объем</th>
@@ -47,9 +47,12 @@
                         </thead>
                         <tbody id="orders-table">
                         @foreach ($orders as $order)
-                            <tr class="border-t" id="order-{{ $order->id }}">
+                            <tr class="border-t text-center" id="order-{{ $order->id }}">
                                 <td class="px-4 py-2">{{ $order->symbol }}</td>
-                                <td class="px-4 py-2">{{ ucfirst($order->type) }}</td>
+                                @php
+                                    $classType = $order->type === 'buy' ? 'text-green-700' : 'text-red-600';
+                                @endphp
+                                <td class="px-4 py-2 {{ $order->type === 'buy' ? 'text-green-700' : 'text-red-600' }}">{{ ucfirst($order->type) }}</td>
                                 <td class="px-4 py-2">{{ $order->volume }}</td>
                                 <td class="px-4 py-2">{{ $order->entry_price }}</td>
                                 <td class="px-4 py-2">{{ $order->duration }} минут</td>
@@ -68,6 +71,44 @@
                         @endforeach
                         </tbody>
                     </table>
+                </div>
+
+                <div class="bg-white p-4 rounded shadow overflow-x-auto mt-8">
+                    <h3 class="text-lg font-bold mb-2">История сделок</h3>
+                    <table class="table-auto w-full min-w-[600px]">
+                        <thead class="bg-gray-800 text-white">
+                        <tr class="text-center">
+                            <th class="px-4 py-2">Актив</th>
+                            <th class="px-4 py-2">Тип</th>
+                            <th class="px-4 py-2">Объем</th>
+                            <th class="px-4 py-2">Цена входа</th>
+                            <th class="px-4 py-2">Цена закрытия</th>
+                            <th class="px-4 py-2">Прибыль</th>
+                            <th class="px-4 py-2">Дата</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach ($orderHistory as $history)
+                            <tr class="border-t text-center">
+                                <td class="px-4 py-2">{{ $history->symbol }}</td>
+                                <td class="px-4 py-2 {{ $history->type === 'buy' ? 'text-green-700' : 'text-red-600' }}">{{ ucfirst($history->type) }}</td>
+                                <td class="px-4 py-2">{{ $history->volume }}</td>
+                                <td class="px-4 py-2">{{ $history->entry_price }}</td>
+                                <td class="px-4 py-2">{{ $history->closing_price }}</td>
+                                <td class="px-4 py-2">
+                    <span style="color: {{ $history->profit >= 0 ? 'green' : 'red' }};">
+                        ${{ number_format($history->profit, 2) }}
+                    </span>
+                                </td>
+                                <td class="px-4 py-2">{{ $history->created_at->format('d.m.Y H:i') }}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+
+                    <div class="mt-4">
+                        {{ $orderHistory->links() }}
+                    </div>
                 </div>
             </div>
         </div>

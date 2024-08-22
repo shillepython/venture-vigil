@@ -2,7 +2,7 @@
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
+            <tr class="text-center">
                 <th scope="col" class="px-6 py-3">
                     ID
                 </th>
@@ -19,6 +19,9 @@
                     Balance
                 </th>
                 <th scope="col" class="px-6 py-3">
+                    Success Rate
+                </th>
+                <th scope="col" class="px-6 py-3">
                     Date registration
                 </th>
                 <th scope="col" class="px-6 py-3">
@@ -29,7 +32,7 @@
             <tbody>
             @if($users)
                 @foreach($users as $user)
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-center">
                         <td class="px-6 py-4">
                             {{ $user->id }}
                         </td>
@@ -43,7 +46,10 @@
                             {{ $user->phone }}
                         </th>
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $user->balance }}
+                            {{ $user->balance }}$
+                        </td>
+                        <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $user->successRate }}%
                         </td>
                         <td class="px-6 py-4">
                             {{ $user->created_at }}
@@ -81,6 +87,10 @@
                 <div class="mb-4">
                     <label for="balance" class="block text-sm font-medium text-gray-300">Balance</label>
                     <input type="number" wire:model="balance" id="balance" class="mt-1 block w-full bg-gray-800 text-white border border-gray-600 rounded-md">
+                </div>
+                <div class="mb-4">
+                    <label for="successRate" class="block text-sm font-medium text-gray-300">Success Rate</label>
+                    <input type="number" wire:model.live="successRate" id="successRate" class="mt-1 block w-full bg-gray-800 text-white border border-gray-600 rounded-md">
                 </div>
                 <div class="mb-4">
                     <label for="notification" class="block text-sm font-medium text-gray-300">Уведомление</label>

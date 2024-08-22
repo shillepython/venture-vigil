@@ -2,14 +2,18 @@
 
 namespace App\Livewire;
 
+use App\Models\OrderTradeHistory;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use App\Models\TradingOrder;
 use Illuminate\Support\Facades\Auth;
+use Livewire\WithPagination;
 use Livewire\Attributes\On;
 
 class Trading extends Component
 {
+    use WithPagination;
     public $symbol = 'EUR/USD';
     public $interval = 1;
     public $successRate;
@@ -157,6 +161,23 @@ class Trading extends Component
 
         $profit = $this->calculateProfit($order->entry_price, $currentPrice, $order->volume, $order->type);
 
+        // Вычисление продолжительности сделки в минутах
+        $createdAt = Carbon::parse($order->created_at);
+        $closedAt = Carbon::now();
+        $duration = $closedAt->diffInMinutes($createdAt);
+
+        // Сохранение в историю
+        OrderTradeHistory::create([
+            'user_id' => Auth::id(),
+            'symbol' => $order->symbol,
+            'type' => $order->type,
+            'volume' => $order->volume,
+            'entry_price' => $order->entry_price,
+            'closing_price' => $currentPrice,
+            'profit' => $profit,
+            'duration' => $duration, // Используем рассчитанную продолжительность
+        ]);
+
         $user = Auth::user();
         $user->balance = round($user->balance + $order->volume + $profit, 3);
         if ($user->balance < 0) {
@@ -192,6 +213,11 @@ class Trading extends Component
 
     public function render()
     {
-        return view('livewire.trading');
+        $orderHistory = OrderTradeHistory::where('user_id', Auth::id())
+            ->orderBy('created_at', 'desc')
+            ->paginate(10);
+        return view('livewire.trading', [
+            'orderHistory' => $orderHistory
+        ]);
     }
 }
