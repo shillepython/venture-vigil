@@ -73,4 +73,10 @@ class WithdrawalView extends Component
         $this->reset(['reason', 'withdrawalId', 'statusUpdate']);
         session()->flash('message', 'Статус запроса успешно обновлён.');
     }
+
+    public function delete($withdrawalId)
+    {
+        OrdersWithdrawal::find($withdrawalId)->delete();
+        $this->reset(['reason', 'withdrawalId', 'statusUpdate']);
+    }
 }

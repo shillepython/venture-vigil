@@ -13,6 +13,9 @@
                 <x-section-border/>
             @endif
 
+            @livewire('transfer-funds-form')
+            <x-section-border/>
+
             @if (true)
                 <div class="mt-10 sm:mt-0">
                     @livewire('profile.verification-form')

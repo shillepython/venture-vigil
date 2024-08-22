@@ -29,6 +29,9 @@
                                 class="bg-green-500 text-white px-3 py-1 rounded">Подтвердить</button>
                         <button wire:click="confirmAction({{ $withdrawal->id }}, 2)"
                                 class="bg-red-500 text-white px-3 py-1 rounded">Отклонить</button>
+                        <button wire:click="delete({{ $withdrawal->id }}, 2)"
+                                class="bg-red-500 text-white px-3 py-1 rounded">Удалить</button>
+
                     </td>
                 </tr>
             @endforeach
