@@ -38,7 +38,7 @@ class TransferFundsForm extends Component
 
         session()->flash('message', 'Перевод пользователю: ' . $this->email . ' успешно выполнен.');
         
-        $messageToRecipient = 'Пользователь: ' . $sender->email . 'перевёл вам сумму: ' . $this->amount . ' USD';
+        $messageToRecipient = 'Пользователь: ' . $sender->email . ' перевёл вам сумму: ' . $this->amount . ' USD';
         $recipient->notify(new TransferUserNotification($user, $messageToRecipient));
 
         $this->reset(['email', 'amount']);
