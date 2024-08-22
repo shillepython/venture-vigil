@@ -7,13 +7,13 @@
                     ID
                 </th>
                 <th scope="col" class="px-6 py-3">
-                    First name
-                </th>
-                <th scope="col" class="px-6 py-3">
-                    Last name
+                    Full name
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Phone
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
                 </th>
                 <th scope="col" class="px-6 py-3">
                     Balance
@@ -37,13 +37,13 @@
                             {{ $user->id }}
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $user->first_name }}
-                        </th>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $user->last_name }}
+                            {{ $user->first_name }} {{ $user->last_name }}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $user->phone }}
+                        </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                            {{ $user->email }}
                         </th>
                         <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                             {{ $user->balance }}$

@@ -17,6 +17,9 @@
                                 @if(isset($notification->data['withdrawal_id']))
                                     <br>
                                     <p class="text-gray-400 text-sm">Вывод средств, сумма: {{ \App\Models\OrdersWithdrawal::find($notification->data['withdrawal_id'])->amount }}$</p>
+                                @elseif(isset($notification->data['transfer_user_id']))
+                                    <br>
+                                    <p class="text-gray-400 text-sm">Перевод средств</p>
                                 @endif
                                 <p class="text-sm text-gray-300">{{ $notification->created_at->diffForHumans() }}</p>
                             </div>

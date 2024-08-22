@@ -2,6 +2,8 @@
 namespace App\Livewire;
 
 use App\Models\User;
+use App\Notifications\TransferUserNotification;
+use App\Notifications\UserNotification;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
@@ -21,6 +23,7 @@ class TransferFundsForm extends Component
 
         $recipient = User::where('email', $this->email)->first();
         $sender = Auth::user();
+        $user = User::find($sender->id);
 
         if ($sender->balance < $this->amount) {
             session()->flash('error', 'Недостаточно средств для перевода.');
@@ -34,6 +37,10 @@ class TransferFundsForm extends Component
         $recipient->save();
 
         session()->flash('message', 'Перевод пользователю: ' . $this->email . ' успешно выполнен.');
+        
+        $messageToRecipient = 'Пользователь: ' . $sender->email . 'перевёл вам сумму: ' . $this->amount . ' USD';
+        $recipient->notify(new TransferUserNotification($user, $messageToRecipient));
+
         $this->reset(['email', 'amount']);
     }
 
