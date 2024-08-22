@@ -6,6 +6,7 @@ use App\Http\Controllers\TradingController;
 use App\Http\Controllers\TradingOrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VerificationController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -21,6 +22,7 @@ Route::middleware([
     Route::group(['middleware' => ['role:admin']], function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.list');
         Route::get('/verification', [VerificationController::class, 'list'])->name('verification.list');
+        Route::get('/withdrawal', [WithdrawalController::class, 'list'])->name('withdrawal.list');
         Route::get('/users', [UserController::class, 'list'])->name('users.list');
     });
 

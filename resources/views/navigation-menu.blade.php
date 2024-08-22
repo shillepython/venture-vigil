@@ -25,6 +25,9 @@
                         <x-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
                             {{ __('Verification') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('withdrawal.list') }}" :active="request()->routeIs('withdrawal.list')">
+                            {{ __('Withdrawal') }}
+                        </x-nav-link>
                         <x-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
                             {{ __('Users') }}
                         </x-nav-link>
@@ -101,6 +104,8 @@
                         {{ __('Verify now') }}
                     </a>
                 @endif
+
+                <livewire:notifications>
 
                 <livewire:language>
 
@@ -190,14 +195,24 @@
                 {{ __('all.cashiers') }}
                 </x-responsive-nav-link>
                 @role('admin')
-                <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
-                    {{ __('Orders') }}
-                </x-responsive-nav-link>
-                <x-responsive-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
-                    {{ __('Verification') }}
-                </x-responsive-nav-link>
-            @endrole
+                    <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
+                        {{ __('Orders') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
+                        {{ __('Verification') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('withdrawal.list') }}" :active="request()->routeIs('withdrawal.list')">
+                        {{ __('Withdrawal') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
+                        {{ __('Users') }}
+                    </x-responsive-nav-link>
+                @endrole
+            <livewire:notifications/>
+
         </div>
+
+
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">

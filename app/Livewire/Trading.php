@@ -36,6 +36,7 @@ class Trading extends Component
             $randomOrder = $this->orders->random();
             $this->lastOrderType = $randomOrder->type;
         }
+        $this->generateInitialCandles($this->currentPrice, 100); // Генерация 1000 случайных свечей
 
         $this->updateTradeAmount(); // Обновляем сумму сделки при монтировании компонента
     }
@@ -50,22 +51,28 @@ class Trading extends Component
         } else {
             $this->currentPrice = 1.1128; // Резервное значение, если API недоступно
         }
-
-        // Создание первой свечи на основе текущей цены
-        $this->generateInitialCandle($this->currentPrice);
     }
 
-    public function generateInitialCandle($price)
+    public function generateInitialCandles($price, $count = 1000)
     {
-        $open = (float) $price;
-        $high = $open + 0.001;
-        $low = $open - 0.001;
-        $close = (float) $price;
+        $candles = [];
+        $currentPrice = $price;
 
-        $this->initialCandleData[] = [
-            'x' => now()->toISOString(),
-            'y' => [$open, $high, $low, $close]
-        ];
+        for ($i = 0; $i < $count; $i++) {
+            $open = $currentPrice;
+            $high = $open + (mt_rand(0, 2000) / 100000); // случайное значение для high
+            $low = $open - (mt_rand(0, 2000) / 100000);  // случайное значение для low
+            $close = mt_rand(0, 1) ? $high : $low;
+
+            $candles[] = [
+                'x' => now()->subMinutes($count - $i)->toISOString(), // отступаем назад по времени
+                'y' => [$open, $high, $low, $close]
+            ];
+
+            $currentPrice = $close; // обновляем текущую цену для следующей свечи
+        }
+
+        $this->initialCandleData = $candles;
     }
 
     public function updatedVolume()

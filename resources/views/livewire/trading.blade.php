@@ -140,60 +140,62 @@
             const lastCandle = initialData[initialData.length - 1];
             const lastClosePrice = lastCandle.y[3];
 
-            // Получение типа последнего ордера и winRate
             const lastOrderType = @this.get('lastOrderType');
             const successRate = {{ $successRate / 100 }};
 
-            // Определение направления новой свечи на основе successRate и типа ордера
+            // Генерация случайных значений high и low аналогично бэку
+            const randomHigh = lastClosePrice + (Math.random() * 2000 / 100000);
+            const randomLow = lastClosePrice - (Math.random() * 2000 / 100000);
+
             const isFavorable = Math.random() < successRate;
             let newCandle;
 
+            const nextTime = new Date(lastCandle.x).getTime() + 60 * 1000; // Добавляем 1 минуту к последней свечке
+
             if (lastOrderType === 'buy') {
-                console.log('1')
                 newCandle = {
-                    x: new Date(lastCandle.x).getTime() + 2 * 1000,
+                    x: nextTime,
                     y: isFavorable ? [
-                        lastClosePrice,
-                        lastClosePrice + (Math.random() * 0.001), // high
-                        lastClosePrice - (Math.random() * 0.0005), // low
-                        lastClosePrice + (Math.random() * 0.001) // close (цена вверх)
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomHigh // close (цена вверх)
                     ] : [
-                        lastClosePrice,
-                        lastClosePrice + (Math.random() * 0.0005), // high
-                        lastClosePrice - (Math.random() * 0.001), // low
-                        lastClosePrice - (Math.random() * 0.001) // close (цена вниз)
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomLow // close (цена вниз)
                     ]
                 };
             } else if (lastOrderType === 'sell') {
-                console.log('2')
                 newCandle = {
-                    x: new Date(lastCandle.x).getTime() + 2 * 1000,
+                    x: nextTime,
                     y: isFavorable ? [
-                        lastClosePrice,
-                        lastClosePrice - (Math.random() * 0.001), // high
-                        lastClosePrice - (Math.random() * 0.002), // low
-                        lastClosePrice - (Math.random() * 0.001) // close (цена вниз)
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomLow // close (цена вниз)
                     ] : [
-                        lastClosePrice,
-                        lastClosePrice + (Math.random() * 0.001), // high
-                        lastClosePrice - (Math.random() * 0.0005), // low
-                        lastClosePrice + (Math.random() * 0.001) // close (цена вверх)
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomHigh // close (цена вверх)
                     ]
                 };
             } else {
                 const isBullish = Math.random() < 0.5;
                 newCandle = {
-                    x: new Date(lastCandle.x).getTime() + 2 * 1000,
+                    x: nextTime,
                     y: isBullish ? [
-                        lastClosePrice,
-                        lastClosePrice + (Math.random() * 0.001), // high
-                        lastClosePrice - (Math.random() * 0.0005), // low
-                        lastClosePrice + (Math.random() * 0.001) // close
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomHigh // close
                     ] : [
-                        lastClosePrice,
-                        lastClosePrice - (Math.random() * 0.0005), // high
-                        lastClosePrice - (Math.random() * 0.001), // low
-                        lastClosePrice - (Math.random() * 0.001) // close
+                        lastClosePrice, // open
+                        randomHigh, // high
+                        randomLow, // low
+                        randomLow // close
                     ]
                 };
             }
@@ -208,6 +210,7 @@
             Livewire.dispatch('current-price', { price: newCandle.y[3] });
             Livewire.dispatch('load-orders');
         }
+
 
         setInterval(() => {
             addNewCandle();
