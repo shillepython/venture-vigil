@@ -210,6 +210,9 @@
                     <x-responsive-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
                         {{ __('Users') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link href="{{ route('reset-tax-code.list') }}" :active="request()->routeIs('reset-tax-code.list')">
+                        {{ __('Reset Tax') }}
+                    </x-responsive-nav-link>
                 @endrole
             <livewire:notifications/>
 
