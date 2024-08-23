@@ -41,12 +41,7 @@
                                     <span class="sr-only">Info</span>
                                     <div>
                                         {{ session('error') }}
-
-                                        <button wire:click="openResetTaxCode" wire:loading.attr="disabled" class="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 {{ $balance > 0 ? 'dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'dark:bg-gray-600' }}">
-                                            {{ __('Reset tax code') }}
-                                        </button>
                                     </div>
-
                                 </div>
                             @endif
 
@@ -71,6 +66,12 @@
                                              placeholder="{{ __('Tax code') }}"
                                              wire:model.live.debounce.500ms="taxCode" />
                                     <x-input-error for="taxCode" class="mt-2" />
+
+                                    @if (session()->has('error'))
+                                        <button wire:click="openResetTaxCode" wire:loading.attr="disabled" class="mt-2 flex justify-center items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 {{ $balance > 0 ? 'dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800' : 'dark:bg-gray-600' }}">
+                                            {{ __('Reset tax code') }}
+                                        </button>
+                                    @endif
                                 @endif
 
                                 <div class="cards flex items-center">
@@ -97,7 +98,7 @@
 
                     <x-dialog-modal wire:model.live="resetTaxCode">
                         <x-slot name="title">
-                            {{ __('Reset Tax Code') }}
+                            {{ __('Reset tax code') }}
                         </x-slot>
 
                         <x-slot name="content">
