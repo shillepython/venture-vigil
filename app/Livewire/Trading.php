@@ -40,7 +40,7 @@ class Trading extends Component
             $randomOrder = $this->orders->random();
             $this->lastOrderType = $randomOrder->type;
         }
-        $this->generateInitialCandles($this->currentPrice, 100); // Генерация 1000 случайных свечей
+        $this->generateInitialCandles($this->currentPrice, 5100); // Генерация 1000 случайных свечей
 
         $this->updateTradeAmount(); // Обновляем сумму сделки при монтировании компонента
     }
@@ -61,7 +61,7 @@ class Trading extends Component
     {
         $candles = [];
         $currentPrice = $price;
-
+        $time = 0;
         for ($i = 0; $i < $count; $i++) {
             $open = $currentPrice;
             $high = $open + (mt_rand(0, 2000) / 100000); // случайное значение для high
@@ -69,10 +69,14 @@ class Trading extends Component
             $close = mt_rand(0, 1) ? $high : $low;
 
             $candles[] = [
-                'x' => now()->subMinutes($count - $i)->toISOString(), // отступаем назад по времени
-                'y' => [$open, $high, $low, $close]
+                'time' => time() + $time,
+                'open' => $open,
+                'high' => $high,
+                'low' => $low,
+                'close' => $close
             ];
 
+            $time += 1000;
             $currentPrice = $close; // обновляем текущую цену для следующей свечи
         }
 

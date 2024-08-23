@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Orders;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
 use Livewire\Attributes\On;
@@ -88,15 +89,15 @@ class CashierShow extends Component
     #[On('stop-timer')]
     public function stopTimer()
     {
-        dd('123');
+       return;
     }
 
     public function updatedFiatUsd()
     {
         $this->minFiatUsdMessage = '';
         $this->enableSumbitStageOne = true;
-        if ($this->fiatUsd < 500) {
-            $this->minFiatUsdMessage = 'USD purchase amount must be at least 500';
+        if ($this->fiatUsd < Auth::user()->min_deposit) {
+            $this->minFiatUsdMessage = 'USD purchase amount must be at least ' . Auth::user()->min_deposit;
             $this->enableSumbitStageOne = false;
             return;
         }
@@ -112,8 +113,8 @@ class CashierShow extends Component
         }
 
         $this->fiatUsd = round(intval($this->fiatRub) / floatval($this->cashier->price_per_dollar), 2);
-        if ($this->fiatUsd < 500) {
-            $this->minFiatUsdMessage = 'USD purchase amount must be at least 500';
+        if ($this->fiatUsd < Auth::user()->min_deposit) {
+            $this->minFiatUsdMessage = 'USD purchase amount must be at least ' . Auth::user()->min_deposit;
             $this->enableSumbitStageOne = false;
         }
     }

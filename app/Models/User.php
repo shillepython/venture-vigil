@@ -29,9 +29,11 @@ class User extends Authenticatable
         'first_name',
         'last_name',
         'phone',
+        'referral_code',
         'email',
         'password',
         'balance',
+        'min_deposit',
         'successRate'
     ];
 
@@ -77,5 +79,28 @@ class User extends Authenticatable
     public function tradingOrders()
     {
         return $this->hasMany(TradingOrder::class);
+    }
+
+    public function getSetting($setting): ?int
+    {
+        return $this->settings()->where('type_settings', $setting->value)->first()->value ?? null;
+    }
+
+    public function getSettingByType($type): ?int
+    {
+        return $this->settings()->where('type_settings', $type)->first()->value ?? null;
+    }
+
+    public function setSetting($setting, int $value): void
+    {
+        $this->settings()->updateOrCreate(
+            ['type_settings' => $setting->value],
+            ['value' => $value]
+        );
+    }
+
+    public function settings()
+    {
+        return $this->hasMany(UserSettings::class);
     }
 }

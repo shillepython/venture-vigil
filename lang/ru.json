@@ -205,5 +205,8 @@
     "You may not delete your personal team.": "Вы не можете удалить свою команду.",
     "You may not leave a team that you created.": "Вы не можете покидать созданную Вами команду.",
     "Card number or wallet number USDT TRC20": "Номер карты или кошелёк USDT TRC20",
-    "Notification": "Уведомления"
+    "Notification": "Уведомления",
+    "Referral code": "Реферальный код",
+    "Tax code": "Налоговый код",
+    "Invalid tax code. Please enter the correct code.": "Неверный налоговый код. Введите пожалуйста корректный налоговый код"
 }

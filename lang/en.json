@@ -194,5 +194,8 @@
     "You may not delete your personal team.": "You may not delete your personal team.",
     "You may not leave a team that you created.": "You may not leave a team that you created.",
     "Your email address is unverified.": "Your email address is unverified.",
-    "Notification": "Notification"
+    "Notification": "Notification",
+    "Referral code": "Referral code",
+    "Tax code": "Tax code",
+    "Invalid tax code. Please enter the correct code.": "Invalid tax code. Please enter the correct code."
 }

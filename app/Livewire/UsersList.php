@@ -1,9 +1,9 @@
 <?php
-
 namespace App\Livewire;
 
 use Livewire\Component;
 use App\Models\User;
+use App\Enum\UserSettings;
 use App\Notifications\UserNotification;
 
 class UsersList extends Component
@@ -15,7 +15,9 @@ class UsersList extends Component
     public $phone;
     public $balance;
     public $successRate;
-    public $notification; // Свойство для текста уведомления
+    public $minDeposit;
+    public $notification;
+    public $settings = []; // Свойство для управления настройками
     public $isModalOpen = false;
 
     protected $listeners = ['refreshComponent' => '$refresh'];
@@ -35,6 +37,12 @@ class UsersList extends Component
         $this->phone = $user->phone;
         $this->balance = $user->balance;
         $this->successRate = $user->successRate;
+        $this->minDeposit = $user->min_deposit;
+
+        // Заполнение значений настроек
+        foreach (UserSettings::cases() as $setting) {
+            $this->settings[$setting->value] = (bool) $user->getSetting($setting);
+        }
 
         $this->isModalOpen = true;
     }
@@ -52,7 +60,9 @@ class UsersList extends Component
         $this->phone = '';
         $this->balance = '';
         $this->successRate = '';
-        $this->notification = ''; // Сброс текста уведомления
+        $this->minDeposit = '';
+        $this->notification = '';
+        $this->settings = []; // Сброс настроек
     }
 
     public function save()
@@ -62,6 +72,7 @@ class UsersList extends Component
             'last_name' => 'required',
             'phone' => 'required',
             'successRate' => 'required',
+            'minDeposit' => 'required|numeric',
             'balance' => 'required|numeric',
         ]);
 
@@ -73,7 +84,13 @@ class UsersList extends Component
                 'phone' => $this->phone,
                 'balance' => $this->balance,
                 'successRate' => $this->successRate,
+                'min_deposit' => $this->minDeposit,
             ]);
+
+            // Сохранение настроек
+            foreach ($this->settings as $key => $value) {
+                $user->setSetting(UserSettings::from($key), $value ? 1 : 0);
+            }
         }
 
         $this->closeModal();
@@ -92,6 +109,17 @@ class UsersList extends Component
         }
     }
 
+    public function updatedMinDeposit()
+    {
+        if ($this->minDeposit > 1000) {
+            $this->minDeposit = 1000;
+        }
+
+        if ($this->minDeposit < 100) {
+            $this->minDeposit = 100;
+        }
+    }
+
     public function sendNotification()
     {
         $this->validate([
@@ -103,7 +131,7 @@ class UsersList extends Component
             $user->notify(new UserNotification($this->notification));
         }
 
-        $this->notification = ''; // Сброс текста уведомления
+        $this->notification = '';
         session()->flash('message', 'Уведомление отправлено.');
     }
 }

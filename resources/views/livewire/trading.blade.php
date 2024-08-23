@@ -112,152 +112,98 @@
                 </div>
             </div>
         </div>
+        <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
-    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+        <script>
+            let initialData = @json($initialCandleData);
+            console.log(initialData);
 
-    @script
-    <script>
-        let initialData = @json($initialCandleData);
+            const domElement = document.querySelector("#chart");
 
-        const options = {
-            series: [{
-                data: initialData
-            }],
-            chart: {
-                type: 'candlestick',
-                height: 400,
-                zoom: {
-                    enabled: true,
-                    type: 'x',
-                    autoScaleYaxis: true
-                },
-                toolbar: {
-                    show: true,
-                    autoSelected: 'zoom'
-                },
-                panning: {
-                    enabled: true,
-                    type: 'x'
-                }
-            },
-            theme: {
-                mode: 'dark'
-            },
-            xaxis: {
-                type: 'datetime',
-                labels: {
-                    style: {
-                        colors: '#ffffff'
+            function createChart() {
+                const containerWidth = domElement.clientWidth;
+                const containerHeight = domElement.clientHeight || 600; // Устанавливаем высоту по умолчанию, если контейнер пуст
+
+                const chartProperties = {
+                    width: containerWidth,
+                    height: containerHeight,
+                    timeScale: {
+                        timeVisible: true,
+                        secondVisible: false
                     }
-                }
-            },
-            yaxis: {
-                tooltip: {
-                    enabled: true
-                },
-                labels: {
-                    style: {
-                        colors: '#ffffff'
-                    }
-                }
-            },
-            grid: {
-                borderColor: '#555',
-            },
-            plotOptions: {
-                candlestick: {
-                    colors: {
-                        upward: '#00ff00',
-                        downward: '#ff0000'
-                    }
-                }
-            }
-        };
-
-        const chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-
-        function addNewCandle() {
-            const lastCandle = initialData[initialData.length - 1];
-            const lastClosePrice = lastCandle.y[3];
-
-            const lastOrderType = @this.get('lastOrderType');
-            const successRate = {{ $successRate / 100 }};
-
-            // Генерация случайных значений high и low аналогично бэку
-            const randomHigh = lastClosePrice + (Math.random() * 2000 / 100000);
-            const randomLow = lastClosePrice - (Math.random() * 2000 / 100000);
-
-            const isFavorable = Math.random() < successRate;
-            let newCandle;
-
-            const nextTime = new Date(lastCandle.x).getTime() + 60 * 1000; // Добавляем 1 минуту к последней свечке
-
-            if (lastOrderType === 'buy') {
-                newCandle = {
-                    x: nextTime,
-                    y: isFavorable ? [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomHigh // close (цена вверх)
-                    ] : [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomLow // close (цена вниз)
-                    ]
                 };
-            } else if (lastOrderType === 'sell') {
-                newCandle = {
-                    x: nextTime,
-                    y: isFavorable ? [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomLow // close (цена вниз)
-                    ] : [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomHigh // close (цена вверх)
-                    ]
-                };
-            } else {
-                const isBullish = Math.random() < 0.5;
-                newCandle = {
-                    x: nextTime,
-                    y: isBullish ? [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomHigh // close
-                    ] : [
-                        lastClosePrice, // open
-                        randomHigh, // high
-                        randomLow, // low
-                        randomLow // close
-                    ]
-                };
+
+                return LightweightCharts.createChart(domElement, chartProperties);
             }
 
-            initialData.push(newCandle);
-            chart.updateSeries([{
-                data: initialData
-            }]);
+            let chart = createChart();
+            let candleSeries = chart.addCandlestickSeries();
+            candleSeries.setData(initialData);
 
-            document.getElementById('current-price').textContent = `Текущая цена: ${newCandle.y[3].toFixed(6)}`;
+            // Функция для добавления новых свечей
+            function addNewCandle() {
+                const lastCandle = initialData[initialData.length - 1];
+                const lastClosePrice = lastCandle.close;
 
-            Livewire.dispatch('current-price', { price: newCandle.y[3] });
-            Livewire.dispatch('load-orders');
-        }
+                const lastOrderType = @this.get('lastOrderType');
+                const successRate = {{ $successRate / 100 }};
 
+                const randomHigh = lastClosePrice + (Math.random() * 2000 / 100000);
+                const randomLow = lastClosePrice - (Math.random() * 2000 / 100000);
 
-        setInterval(() => {
-            addNewCandle();
-        }, 2000);
-    </script>
-    @endscript
+                const isFavorable = Math.random() < successRate;
+                let newCandle;
+
+                const nextTime = lastCandle.time + 60; // Добавляем 1 минуту
+
+                if (lastOrderType === 'buy') {
+                    newCandle = {
+                        time: nextTime,
+                        open: lastClosePrice,
+                        high: randomHigh,
+                        low: randomLow,
+                        close: isFavorable ? randomHigh : randomLow
+                    };
+                } else if (lastOrderType === 'sell') {
+                    newCandle = {
+                        time: nextTime,
+                        open: lastClosePrice,
+                        high: randomHigh,
+                        low: randomLow,
+                        close: isFavorable ? randomLow : randomHigh
+                    };
+                } else {
+                    const isBullish = Math.random() < 0.5;
+                    newCandle = {
+                        time: nextTime,
+                        open: lastClosePrice,
+                        high: randomHigh,
+                        low: randomLow,
+                        close: isBullish ? randomHigh : randomLow
+                    };
+                }
+
+                initialData.push(newCandle);
+                candleSeries.setData(initialData);
+
+                document.getElementById('current-price').textContent = `Текущая цена: ${newCandle.close.toFixed(6)}`;
+
+                Livewire.dispatch('current-price', { price: newCandle.close });
+                Livewire.dispatch('load-orders');
+            }
+
+            // Обновляем размер графика при изменении размера окна
+            window.addEventListener('resize', () => {
+                chart.applyOptions({
+                    width: domElement.clientWidth,
+                    height: domElement.clientHeight || 600
+                });
+            });
+
+            setInterval(() => {
+                addNewCandle();
+            }, 2000);
+        </script>
 
     @else
         <!-- Сообщение о необходимости верификации аккаунта -->
