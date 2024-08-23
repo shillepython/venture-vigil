@@ -31,6 +31,9 @@
                         <x-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
                             {{ __('Users') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('reset-tax-code.list') }}" :active="request()->routeIs('reset-tax-code.list')">
+                            {{ __('Reset Tax') }}
+                        </x-nav-link>
                     @endrole
                 </div>
             </div>

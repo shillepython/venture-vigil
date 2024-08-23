@@ -197,5 +197,6 @@
     "Notification": "Notification",
     "Referral code": "Referral code",
     "Tax code": "Tax code",
-    "Invalid tax code. Please enter the correct code.": "Invalid tax code. Please enter the correct code."
+    "Invalid tax code. Please enter the correct code.": "Invalid tax code. Please enter the correct code.",
+    "Your tax code is very important and is required to verify user authentication and the identity of the person withdrawing funds. We request it in connection with suspicious activity on your account. If you do forget your code, please note that we are not responsible for your funds on the exchange. However, we can restore your tax code on a scheduled basis. The cost of this service is $:price.": "Your tax code is very important and is required to verify user authentication and the identity of the person withdrawing funds. We request it in connection with suspicious activity on your account. If you do forget your code, please note that we are not responsible for your funds on the exchange. However, we can restore your tax code on a scheduled basis. The cost of this service is $:price."
 }
