@@ -61,7 +61,8 @@ class Trading extends Component
     {
         $candles = [];
         $currentPrice = $price;
-        $time = 0;
+        $currentTimestamp = Carbon::now()->timestamp; // Текущее время в секундах
+
         for ($i = 0; $i < $count; $i++) {
             $open = $currentPrice;
             $high = $open + (mt_rand(0, 2000) / 100000); // случайное значение для high
@@ -69,19 +70,20 @@ class Trading extends Component
             $close = mt_rand(0, 1) ? $high : $low;
 
             $candles[] = [
-                'time' => time() + $time,
+                'time' => $currentTimestamp,
                 'open' => $open,
                 'high' => $high,
                 'low' => $low,
                 'close' => $close
             ];
 
-            $time += 1000;
+            $currentTimestamp += 2; // Увеличиваем время на 2 секунды
             $currentPrice = $close; // обновляем текущую цену для следующей свечи
         }
 
         $this->initialCandleData = $candles;
     }
+
 
     public function updatedVolume()
     {

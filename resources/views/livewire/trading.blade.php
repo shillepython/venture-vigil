@@ -154,7 +154,7 @@
                 const isFavorable = Math.random() < successRate;
                 let newCandle;
 
-                const nextTime = lastCandle.time + 60; // Добавляем 1 минуту
+                const nextTime = lastCandle.time + 2; // Добавляем 1 минуту
 
                 if (lastOrderType === 'buy') {
                     newCandle = {
