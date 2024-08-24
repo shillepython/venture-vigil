@@ -39,7 +39,7 @@ class CreateNewUser implements CreatesNewUsers
             'password' => Hash::make($input['password']),
         ]);
         $user->assignRole('lid');
-//        $user->notify(new UserRegister());
+        $user->notify(new UserRegister());
         $user->balance = 20;
         $user->save();
 
