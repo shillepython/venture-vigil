@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\ResetTaxCode as ResetTaxCodeModel;
 use Livewire\Component;
 
 use Livewire\WithPagination;
@@ -26,12 +27,18 @@ class WithdrawalView extends Component
 
     public function render()
     {
-        $withdrawals = OrdersWithdrawal::where('status', 0)
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
+        $currentUser = auth()->user();
+        $withdrawals = OrdersWithdrawal::query();
+        $withdrawals->where('status', 0);
+
+        if (!auth()->user()->hasRole('admin')) {
+            $assignedUserIds = User::where('sales_id', $currentUser->id)->pluck('id');
+            $assignedUserIds->push($currentUser->id);
+            $withdrawals->whereIn('user_id', $assignedUserIds);
+        }
 
         return view('livewire.withdrawal-view', [
-            'withdrawals' => $withdrawals,
+            'withdrawals' => $withdrawals->orderBy('created_at', 'desc')->paginate(10),
         ]);
     }
 

@@ -20,13 +20,12 @@ Route::middleware([
     'verified',
 ])->group(function () {
 
-    Route::group(['middleware' => ['role:admin']], function () {
+    Route::group(['middleware' => ['role:admin|sales']], function () {
         Route::get('/orders', [OrderController::class, 'index'])->name('orders.list');
         Route::get('/verification', [VerificationController::class, 'list'])->name('verification.list');
         Route::get('/withdrawal', [WithdrawalController::class, 'list'])->name('withdrawal.list');
         Route::get('/users', [UserController::class, 'list'])->name('users.list');
         Route::get('/reset-tax-code', [ResetTaxCodeController::class, 'list'])->name('reset-tax-code.list');
-
     });
 
     Route::get('/dashboard', function () {

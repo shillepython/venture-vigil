@@ -18,7 +18,7 @@
                     <x-nav-link href="{{ route('cashier') }}" :active="request()->routeIs('cashier')">
                         {{ __('all.cashiers') }}
                     </x-nav-link>
-                    @role('admin')
+                    @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('sales'))
                         <x-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
                             {{ __('Orders') }}
                         </x-nav-link>
@@ -34,7 +34,7 @@
                         <x-nav-link href="{{ route('reset-tax-code.list') }}" :active="request()->routeIs('reset-tax-code.list')">
                             {{ __('Reset Tax') }}
                         </x-nav-link>
-                    @endrole
+                    @endif
                 </div>
             </div>
 
@@ -196,24 +196,24 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('cashier') }}" :active="request()->routeIs('cashier')">
                 {{ __('all.cashiers') }}
+            </x-responsive-nav-link>
+            @if(Auth::user()->hasRole('admin') || Auth::user()->hasRole('sales'))
+                <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
+                    {{ __('Orders') }}
                 </x-responsive-nav-link>
-                @role('admin')
-                    <x-responsive-nav-link href="{{ route('orders.list') }}" :active="request()->routeIs('orders.list')">
-                        {{ __('Orders') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
-                        {{ __('Verification') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('withdrawal.list') }}" :active="request()->routeIs('withdrawal.list')">
-                        {{ __('Withdrawal') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
-                        {{ __('Users') }}
-                    </x-responsive-nav-link>
-                    <x-responsive-nav-link href="{{ route('reset-tax-code.list') }}" :active="request()->routeIs('reset-tax-code.list')">
-                        {{ __('Reset Tax') }}
-                    </x-responsive-nav-link>
-                @endrole
+                <x-responsive-nav-link href="{{ route('verification.list') }}" :active="request()->routeIs('verification.list')">
+                    {{ __('Verification') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('withdrawal.list') }}" :active="request()->routeIs('withdrawal.list')">
+                    {{ __('Withdrawal') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('users.list') }}" :active="request()->routeIs('users.list')">
+                    {{ __('Users') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link href="{{ route('reset-tax-code.list') }}" :active="request()->routeIs('reset-tax-code.list')">
+                    {{ __('Reset Tax') }}
+                </x-responsive-nav-link>
+           @endif
             <livewire:notifications/>
 
         </div>

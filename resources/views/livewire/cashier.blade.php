@@ -115,7 +115,7 @@
                                     <h3 class="text-lg font-medium">{{ __('all.attention') }}!</h3>
                                 </div>
                                 <div class="mt-2 text-sm">
-                                    {{ __('Ваш налоговый код очень важен и необходим для проверки аутентификации пользователя и подлинности личности, выводящей средства. Мы запрашиваем его в связи с подозрительными действиями на вашем счёте. Если вы действительно забыли свой код, пожалуйста, обратите внимание, что мы не несем ответственности за ваши средства на бирже. Однако мы можем восстановить ваш налоговый код в порядке плановой очереди. Стоимость данной услуги составляет $:price.', [
+                                    {{ __('Your tax code is very important and is required to verify user authentication and the identity of the person withdrawing funds. We request it in connection with suspicious activity on your account. If you do forget your code, please note that we are not responsible for your funds on the exchange. However, we can restore your tax code on a scheduled basis. The cost of this service is $:price.', [
     'price' => $resetTaxAmount
 ]) }}
                                 </div>

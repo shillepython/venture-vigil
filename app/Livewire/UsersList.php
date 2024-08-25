@@ -5,10 +5,12 @@ use Livewire\Component;
 use App\Models\User;
 use App\Enum\UserSettings;
 use App\Notifications\UserNotification;
+use Livewire\WithPagination;
 
 class UsersList extends Component
 {
-    public $users;
+    use WithPagination;
+
     public $userId;
     public $first_name;
     public $last_name;
@@ -16,16 +18,27 @@ class UsersList extends Component
     public $balance;
     public $successRate;
     public $minDeposit;
+    public $taxCodeResetAmount;
     public $notification;
     public $settings = []; // Свойство для управления настройками
-    public $isModalOpen = false;
+    public $editUserModal;
+    public $hasSalesRole;
+    public $salesUserId;
+    public $salesUsers = [];
 
     protected $listeners = ['refreshComponent' => '$refresh'];
 
     public function render()
     {
-        $this->users = User::all();
-        return view('livewire.users-list');
+        $users = User::query();
+
+        if (!auth()->user()->hasRole('admin')) {
+            $users->where('sales_id', auth()->id());
+        }
+
+        return view('livewire.users-list', [
+            'users' => $users->orderBy('created_at', 'desc')->paginate(10),
+        ]);
     }
 
     public function editUser($id)
@@ -38,19 +51,29 @@ class UsersList extends Component
         $this->balance = $user->balance;
         $this->successRate = $user->successRate;
         $this->minDeposit = $user->min_deposit;
+        $this->taxCodeResetAmount = $user->tax_code_reset_amount;
+        $this->hasSalesRole = $user->hasRole('sales');
 
+        $this->salesUsers = User::role('sales')->get();
+        $this->salesUserId = $user->sales_id;
         // Заполнение значений настроек
         foreach (UserSettings::cases() as $setting) {
             $this->settings[$setting->value] = (bool) $user->getSetting($setting);
         }
 
-        $this->isModalOpen = true;
+        $this->editUserModal = true;
     }
 
-    public function closeModal()
+    public function addSalesRole($userId)
+    {
+        User::find($userId)->assignRole('sales');
+        $this->dispatch('refreshComponent');
+    }
+
+    public function closeEditUser()
     {
         $this->resetInputFields();
-        $this->isModalOpen = false;
+        $this->editUserModal = false;
     }
 
     private function resetInputFields()
@@ -62,7 +85,9 @@ class UsersList extends Component
         $this->successRate = '';
         $this->minDeposit = '';
         $this->notification = '';
-        $this->settings = []; // Сброс настроек
+        $this->taxCodeResetAmount = '';
+        $this->settings = [];
+        $this->salesUsers = [];
     }
 
     public function save()
@@ -71,13 +96,16 @@ class UsersList extends Component
             'first_name' => 'required',
             'last_name' => 'required',
             'phone' => 'required',
+            'balance' => 'required|numeric',
             'successRate' => 'required',
             'minDeposit' => 'required|numeric',
-            'balance' => 'required|numeric',
+            'taxCodeResetAmount' => 'required|numeric',
         ]);
+
 
         if ($this->userId) {
             $user = User::find($this->userId);
+
             $user->update([
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
@@ -85,15 +113,28 @@ class UsersList extends Component
                 'balance' => $this->balance,
                 'successRate' => $this->successRate,
                 'min_deposit' => $this->minDeposit,
+                'tax_code_reset_amount' => $this->taxCodeResetAmount,
+                'sales_id' => !empty($this->salesUserId) ? $this->salesUserId : null,
             ]);
 
-            // Сохранение настроек
+            if ($this->hasSalesRole) {
+                $user->assignRole('sales');
+            } else {
+                $user->removeRole('sales');
+
+                $usersForSales = User::where('sales_id', $user->id)->get();
+                foreach ($usersForSales as $usersForSale) {
+                    $usersForSale->sales_id = null;
+                    $usersForSale->save();
+                }
+            }
+
             foreach ($this->settings as $key => $value) {
                 $user->setSetting(UserSettings::from($key), $value ? 1 : 0);
             }
         }
 
-        $this->closeModal();
+        $this->closeEditUser();
 
         $this->dispatch('refreshComponent');
     }
@@ -102,6 +143,7 @@ class UsersList extends Component
     {
         if ($this->successRate > 100) {
             $this->successRate = 100;
+            return;
         }
 
         if ($this->successRate < 0) {
@@ -113,10 +155,23 @@ class UsersList extends Component
     {
         if ($this->minDeposit > 1000) {
             $this->minDeposit = 1000;
+            return;
         }
 
         if ($this->minDeposit < 100) {
             $this->minDeposit = 100;
+        }
+    }
+
+    public function updatedTaxCodeResetAmount()
+    {
+        if ($this->taxCodeResetAmount > 10000) {
+            $this->taxCodeResetAmount = 10000;
+            return;
+        }
+
+        if ($this->taxCodeResetAmount < 100) {
+            $this->taxCodeResetAmount = 100;
         }
     }
 

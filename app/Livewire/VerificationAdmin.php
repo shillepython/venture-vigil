@@ -8,13 +8,6 @@ use Livewire\Component;
 
 class VerificationAdmin extends Component
 {
-    public $verificationList;
-
-    public function mount()
-    {
-        $this->verificationList = Verification::where(['status' => 0])->orderBy('created_at', 'desc')->get();
-    }
-
     public function sumbitVerification($verificationId)
     {
         $verification = Verification::find($verificationId);
@@ -22,10 +15,21 @@ class VerificationAdmin extends Component
         $verification->save();
 
         $this->reset();
-        $this->verificationList = Verification::where(['status' => 0])->orderBy('created_at', 'desc')->get();
     }
     public function render()
     {
-        return view('livewire.verification-admin');
+        $currentUser = auth()->user();
+        $verificationList = Verification::query();
+        $verificationList->where('status', 0);
+
+        if (!auth()->user()->hasRole('admin')) {
+            $assignedUserIds = User::where('sales_id', $currentUser->id)->pluck('id');
+            $assignedUserIds->push($currentUser->id);
+            $verificationList->whereIn('user_id', $assignedUserIds);
+        }
+
+        return view('livewire.verification-admin', [
+            'verificationList' => $verificationList->orderBy('created_at', 'desc')->paginate(10),
+        ]);
     }
 }

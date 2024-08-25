@@ -31,7 +31,7 @@ services:
             - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
-        platform: linux/amd64 # Multi-arch support
+        platform: linux/amd64
         ports:
             - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
@@ -70,6 +70,17 @@ services:
                 - ping
             retries: 3
             timeout: 5s
+    ngrok:
+        image: 'ngrok/ngrok:alpine'
+        environment:
+            NGROK_AUTHTOKEN: '${NGROK_AUTHTOKEN}'
+        command: 'http laravel.test:80'
+        ports:
+            - '4040:4040'
+        networks:
+            - sail
+        depends_on:
+            - laravel.test
     meilisearch:
         image: 'getmeili/meilisearch:latest'
         platform: linux/amd64 # Mlti-arch support

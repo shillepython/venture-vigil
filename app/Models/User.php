@@ -34,7 +34,8 @@ class User extends Authenticatable
         'password',
         'balance',
         'min_deposit',
-        'successRate'
+        'successRate',
+        'sales_id'
     ];
 
     /**
@@ -102,5 +103,15 @@ class User extends Authenticatable
     public function settings()
     {
         return $this->hasMany(UserSettings::class);
+    }
+
+    public function sales()
+    {
+        return $this->belongsTo(User::class, 'sales_id');
+    }
+
+    public function lids()
+    {
+        return $this->hasMany(User::class, 'sales_id');
     }
 }

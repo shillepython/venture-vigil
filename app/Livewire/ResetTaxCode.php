@@ -9,16 +9,20 @@ use Livewire\Component;
 
 class ResetTaxCode extends Component
 {
-    public $resetTaxCodes;
-
-    public function mount()
-    {
-        $this->resetTaxCodes = ResetTaxCodeModel::orderBy('created_at', 'desc')->get();
-    }
-
 
     public function render()
     {
-        return view('livewire.reset-tax-code');
+        $currentUser = auth()->user();
+        $resetTaxCodes = ResetTaxCodeModel::query();
+
+        if (!auth()->user()->hasRole('admin')) {
+            $assignedUserIds = User::where('sales_id', $currentUser->id)->pluck('id');
+            $assignedUserIds->push($currentUser->id);
+            $resetTaxCodes->whereIn('user_id', $assignedUserIds);
+        }
+
+        return view('livewire.reset-tax-code', [
+            'resetTaxCodes' => $resetTaxCodes->orderBy('created_at', 'desc')->paginate(10),
+        ]);
     }
 }
