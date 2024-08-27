@@ -21,25 +21,27 @@
             </tr>
             </thead>
             <tbody>
-            @if($activityLogs && $activityLog->user)
+            @if($activityLogs)
                 @foreach($activityLogs as $activityLog)
-                    <tr class="bg-white dark:border-gray-700 dark:odd:bg-gray-700 dark:even:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="px-6 py-4">
-                            {{ $activityLog->id }}
-                        </td>
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $activityLog->user->first_name ?? null . ' ' . $activityLog->user->last_name ?? null }}
-                        </th>
-                        <td class="px-6 py-4">
-                            <span class="text-lg text-w hite font-bold">{{ $activityLog->action }}</span>
-                        </td>
-                        <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
-                            <pre class="pretty-json">{{ json_encode($activityLog->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
-                        </td>
-                        <td class="px-6 py-4">
-                            {{ $activityLog->created_at }}
-                        </td>
-                    </tr>
+                    @if(isset($activityLog->user->id))
+                        <tr class="bg-white dark:border-gray-700 dark:odd:bg-gray-700 dark:even:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
+                            <td class="px-6 py-4">
+                                {{ $activityLog->id }}
+                            </td>
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                {{ $activityLog->user->first_name ?? null . ' ' . $activityLog->user->last_name ?? null }}
+                            </th>
+                            <td class="px-6 py-4">
+                                <span class="text-lg text-w hite font-bold">{{ $activityLog->action }}</span>
+                            </td>
+                            <td class="px-6 py-4 font-medium text-gray-900 dark:text-white">
+                                <pre class="pretty-json">{{ json_encode($activityLog->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}</pre>
+                            </td>
+                            <td class="px-6 py-4">
+                                {{ $activityLog->created_at }}
+                            </td>
+                        </tr>
+                    @endif
                 @endforeach
             @endif
             </tbody>
