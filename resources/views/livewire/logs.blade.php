@@ -21,7 +21,7 @@
             </tr>
             </thead>
             <tbody>
-            @if($activityLogs)
+            @if($activityLogs && $activityLog->user)
                 @foreach($activityLogs as $activityLog)
                     <tr class="bg-white dark:border-gray-700 dark:odd:bg-gray-700 dark:even:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
                         <td class="px-6 py-4">
