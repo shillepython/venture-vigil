@@ -28,7 +28,7 @@
                             {{ $activityLog->id }}
                         </td>
                         <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            {{ $activityLog->user->first_name . ' ' . $activityLog->user->last_name }}
+                            {{ $activityLog->user->first_name ?? null . ' ' . $activityLog->user->last_name ?? null }}
                         </th>
                         <td class="px-6 py-4">
                             <span class="text-lg text-w hite font-bold">{{ $activityLog->action }}</span>
