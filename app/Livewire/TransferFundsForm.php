@@ -3,11 +3,14 @@ namespace App\Livewire;
 
 use App\Models\User;
 use App\Notifications\TransferUserNotification;
+use App\Traits\LogsActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 
 class TransferFundsForm extends Component
 {
+    use LogsActivity;
+
     public $email;
     public $amount;
 
@@ -39,6 +42,8 @@ class TransferFundsForm extends Component
 
         $messageToRecipient = 'Пользователь: ' . $sender->email . ' перевёл вам сумму: ' . $this->amount . ' USD';
         $recipient->notify(new TransferUserNotification($user, $messageToRecipient));
+
+        $this->logActivity('Transfer funds', ['message' => 'Пользователь: ' . $sender->email . ' перевёл: ' . $recipient->email . ' сумму: ' . $this->amount . ' USD']);
 
         $this->reset(['email', 'amount']);
     }

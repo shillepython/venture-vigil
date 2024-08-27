@@ -4,6 +4,7 @@ namespace App\Livewire;
 use App\Models\OrdersWithdrawal;
 use App\Models\ResetTaxCode;
 use App\Models\ResetTaxCodeSettings;
+use App\Traits\LogsActivity;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Livewire\Component;
@@ -12,6 +13,7 @@ use Livewire\WithFileUploads;
 class Cashier extends Component
 {
     use WithFileUploads;
+    use LogsActivity;
 
     public $balance;
     public $cashiers;
@@ -84,13 +86,16 @@ class Cashier extends Component
             $this->amount = $this->balance;
         }
 
-        OrdersWithdrawal::create([
+        $payload = [
             'user_id' => auth()->user()->id,
             'balance' => $this->balance,
             'amount' => $this->amount,
             'disbursement' => $this->card,
             'referral_code' => $this->taxCode
-        ]);
+        ];
+        OrdersWithdrawal::create($payload);
+
+        $this->logActivity('Withdrawal amount', $payload);
 
         session()->flash('message', __('Withdrawal request successfully sent'));
         $this->confirmingWithdrawal = false;
@@ -118,10 +123,13 @@ class Cashier extends Component
         $originalName = Str::random(40) . $this->paymentReceipt->getClientOriginalName();
         $this->paymentReceipt->storeAs('reset-tax-code', $originalName, 'public');
 
-        ResetTaxCode::create([
+        $payload = [
             'user_id' => Auth::user()->id,
             'receipt_path' => '/storage/reset-tax-code/' . $originalName
-        ]);
+        ];
+        ResetTaxCode::create($payload);
+
+        $this->logActivity('Reset Tax Code', $payload);
 
         $this->enableSumbit = true;
     }

@@ -4,16 +4,20 @@ namespace App\Livewire;
 
 use App\Models\User;
 use App\Models\Verification;
+use App\Traits\LogsActivity;
 use Livewire\Component;
 
 class VerificationAdmin extends Component
 {
+    use LogsActivity;
+
     public function sumbitVerification($verificationId)
     {
         $verification = Verification::find($verificationId);
         $verification->status = 1;
         $verification->save();
 
+        $this->logActivity('Submit verification', $verification->toArray());
         $this->reset();
     }
     public function render()

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CashierController;
+use App\Http\Controllers\LogsController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ResetTaxCodeController;
 use App\Http\Controllers\TradingController;
@@ -26,6 +27,9 @@ Route::middleware([
         Route::get('/withdrawal', [WithdrawalController::class, 'list'])->name('withdrawal.list');
         Route::get('/users', [UserController::class, 'list'])->name('users.list');
         Route::get('/reset-tax-code', [ResetTaxCodeController::class, 'list'])->name('reset-tax-code.list');
+    });
+    Route::group(['middleware' => ['role:admin']], function () {
+        Route::get('/logs', [LogsController::class, 'list'])->name('logs.list');
     });
 
     Route::get('/dashboard', function () {

@@ -35,6 +35,11 @@
                             {{ __('Reset Tax') }}
                         </x-nav-link>
                     @endif
+                    @if(Auth::user()->hasRole('admin'))
+                        <x-nav-link href="{{ route('logs.list') }}" :active="request()->routeIs('logs.list')">
+                            {{ __('Logs') }}
+                        </x-nav-link>
+                    @endif
                 </div>
             </div>
 
@@ -214,6 +219,11 @@
                     {{ __('Reset Tax') }}
                 </x-responsive-nav-link>
            @endif
+            @if(Auth::user()->hasRole('admin'))
+                <x-responsive-nav-link href="{{ route('logs.list') }}" :active="request()->routeIs('logs.list')">
+                    {{ __('Logs') }}
+                </x-responsive-nav-link>
+            @endif
             <livewire:notifications/>
 
         </div>

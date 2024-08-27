@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Verification;
+use App\Traits\LogsActivity;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Http\File;
 use Illuminate\Support\Facades\Storage;
@@ -18,6 +19,8 @@ class VerificationForm extends Component
 {
 
     use WithFileUploads;
+    use LogsActivity;
+
     public $isVerified;
     public $verifiedStatus;
 
@@ -53,7 +56,7 @@ class VerificationForm extends Component
         $proofOfAddressPath = $path . 'proofOfAddress.' . $passportFront->getExtension();
         Storage::putFileAs('public/verification', $proofOfAddress, $proofOfAddressPath);
 
-        Verification::create([
+        $verification = Verification::create([
             'user_id' => auth()->user()->id,
             'front_passport' => '/storage/verification/' . $passportFrontPath,
             'back_passport' => '/storage/verification/' . $passportBackPath,
@@ -62,6 +65,7 @@ class VerificationForm extends Component
         $this->isVerified = true;
 
         session()->flash('message', 'Documents uploaded successfully.');
+        $this->logActivity('Documents verification uploaded', $verification->toArray());
     }
     public function mount()
     {

@@ -4,12 +4,14 @@ namespace App\Livewire;
 
 use App\Models\Orders;
 use App\Models\User;
+use App\Traits\LogsActivity;
 use Livewire\Component;
 use Livewire\WithPagination;
 
 class Order extends Component
 {
     use WithPagination;
+    use LogsActivity;
 
     public function sumbitAmmount($amount, $userId, $orderId)
     {
@@ -21,6 +23,7 @@ class Order extends Component
         $order->status = 2;
         $order->save();
 
+        $this->logActivity('Submit withdrawal amount', $order->toArray());
         $this->reset();
     }
 

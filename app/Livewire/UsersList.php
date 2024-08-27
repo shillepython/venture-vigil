@@ -1,6 +1,7 @@
 <?php
 namespace App\Livewire;
 
+use App\Traits\LogsActivity;
 use Livewire\Component;
 use App\Models\User;
 use App\Enum\UserSettings;
@@ -10,6 +11,7 @@ use Livewire\WithPagination;
 class UsersList extends Component
 {
     use WithPagination;
+    use LogsActivity;
 
     public $userId;
     public $first_name;
@@ -31,6 +33,9 @@ class UsersList extends Component
     public function render()
     {
         $users = User::query();
+        $users->role(['lid', 'admin']);
+
+        $userSales = User::role('sales')->paginate(10);
 
         if (!auth()->user()->hasRole('admin')) {
             $users->where('sales_id', auth()->id());
@@ -38,6 +43,7 @@ class UsersList extends Component
 
         return view('livewire.users-list', [
             'users' => $users->orderBy('created_at', 'desc')->paginate(10),
+            'userSales' => $userSales,
         ]);
     }
 
@@ -66,7 +72,10 @@ class UsersList extends Component
 
     public function addSalesRole($userId)
     {
-        User::find($userId)->assignRole('sales');
+        $userAddedSales = User::find($userId);
+        $userAddedSales->assignRole('sales');
+
+        $this->logActivity('Added sales to user', $userAddedSales->toArray());
         $this->dispatch('refreshComponent');
     }
 
@@ -106,6 +115,8 @@ class UsersList extends Component
         if ($this->userId) {
             $user = User::find($this->userId);
 
+            $payloadLog = [$user->toArray()];
+
             $user->update([
                 'first_name' => $this->first_name,
                 'last_name' => $this->last_name,
@@ -117,11 +128,18 @@ class UsersList extends Component
                 'sales_id' => !empty($this->salesUserId) ? $this->salesUserId : null,
             ]);
 
-            if ($this->hasSalesRole) {
-                $user->assignRole('sales');
-            } else {
-                $user->removeRole('sales');
+            $payloadLog[] = $user->toArray();
 
+            $this->logActivity('Updated user', $payloadLog);
+
+            if ($this->hasSalesRole && !$user->hasRole('sales')) {
+                $user->assignRole('sales');
+                $this->logActivity('Assign sales role', $user->toArray());
+            }
+
+            if (!$this->hasSalesRole && $user->hasRole('sales')) {
+                $user->removeRole('sales');
+                $this->logActivity('Remove sales role', $user->toArray());
                 $usersForSales = User::where('sales_id', $user->id)->get();
                 foreach ($usersForSales as $usersForSale) {
                     $usersForSale->sales_id = null;

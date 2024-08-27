@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\ResetTaxCode as ResetTaxCodeModel;
+use App\Traits\LogsActivity;
 use Livewire\Component;
 
 use Livewire\WithPagination;
@@ -13,8 +14,8 @@ use App\Notifications\WithdrawalStatusUpdated;
 
 class WithdrawalView extends Component
 {
-
     use WithPagination;
+    use LogsActivity;
 
     public $reason;
     public $withdrawalId;
@@ -76,6 +77,8 @@ class WithdrawalView extends Component
 
         $user->notify(new WithdrawalStatusUpdated($withdrawal, $this->reason));
 
+        $this->logActivity('Submit withdrawal', $withdrawal->toArray());
+
         $this->confirmingAction = false;
         $this->reset(['reason', 'withdrawalId', 'statusUpdate']);
         session()->flash('message', 'Статус запроса успешно обновлён.');
@@ -83,7 +86,12 @@ class WithdrawalView extends Component
 
     public function delete($withdrawalId)
     {
-        OrdersWithdrawal::find($withdrawalId)->delete();
+        $ordersWithdrawal = OrdersWithdrawal::find($withdrawalId);
+        $payload = $ordersWithdrawal->toArray();
+        $ordersWithdrawal->delete();
+
+        $this->logActivity('Delete withdrawal', $payload);
+
         $this->reset(['reason', 'withdrawalId', 'statusUpdate']);
     }
 }
